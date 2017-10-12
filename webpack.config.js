@@ -10,7 +10,7 @@ const extractCSS = new ExtractTextPlugin(
 let plugins = [
   extractCSS,
   new HtmlWebpackPlugin({
-    template: "./client/index.html",
+    template: "./index.html",
     filename: "index.html",
     inject: true
   })
@@ -19,8 +19,8 @@ let plugins = [
 if (process.env.NODE_ENV === "production") plugins.push(new UglifyJSPlugin())
 
 module.exports = {
-  context: path.resolve(__dirname, "src"),
-  entry: ["./client/index.js"],
+  context: path.resolve(__dirname, "src/client"),
+  entry: ["./index.js"],
   output: {
     path: path.resolve(__dirname, "dist"),
     publicPath: process.env.NODE_ENV === "production" ? "./" : "/dist",
