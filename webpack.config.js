@@ -93,15 +93,4 @@ module.exports = {
     extensions: [".js"]
   },
   devtool: process.env.NODE_ENV === "dev" ? "eval-source-map" : "",
-  devServer: {
-    port: process.env.PORT || 9000,
-    host: "0.0.0.0",
-    contentBase: "dist/",
-    watchContentBase: true,
-    open: true,
-    overlay: {
-      warnings: process.env.NODE_ENV === "dev" ? true : false,
-      errors: process.env.NODE_ENV === "dev" ? true : false
-    }
-  }
 }
