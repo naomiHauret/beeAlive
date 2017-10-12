@@ -1,0 +1,20 @@
+{
+    "extends": "standard",
+    "rules": {
+        "semi": [
+            2,
+            "never"
+        ],
+        "linebreak-style": [
+            2,
+            "unix"
+        ],
+        "no-unexpected-multiline": 2,
+        "quotes": [
+            "error",
+            "double"
+        ],
+        "no-console": 0,
+        "no-unused-vars": 1
+    }
+}
