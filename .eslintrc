@@ -2,7 +2,7 @@
     "extends": "standard",
     "rules": {
         "semi": [
-            2,
+            1,
             "never"
         ],
         "linebreak-style": [
