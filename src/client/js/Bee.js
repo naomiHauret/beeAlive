@@ -11,17 +11,20 @@ class Bee {
     this.meshes = []
     this.materials = {}
     this.raycaster = new THREE.Raycaster()
-    this.mouse = new THREE.Vector2()
+    this.mouse = new THREE.Vector2(0, 0)
     this.animate = this.animate.bind(this)
     this.deg = 0
-    this.x = Math.random() * 8
-    this.y = Math.random() * 8
-    this.z = Math.random() * 8
+    this.x = 5
+    this.y = 5
+    this.z = 5
     this.animationSpeed = Math.random() * (0.15 - 0.085) + 0.085
     return this.initialize()
   }
 
   initialize () {
+    // Ray caster
+    this.raycaster.ray.direction.set(0, -1, 0)
+
     // materials
     this.materials.white = new THREE.MeshBasicMaterial({
       color: "#ffffff"
@@ -31,7 +34,7 @@ class Bee {
     this.bee = new THREE.Group()
 
     // Geometries
-    this.boxSquare = new THREE.BoxGeometry(0.25, 0.25, 0.25)
+    this.boxSquare = new THREE.BoxGeometry(1, 1, 1)
 
     // Meshes
     this.square = new THREE.Mesh(this.boxSquare, this.materials.white)
@@ -47,20 +50,19 @@ class Bee {
     // Shadows
     this.bee.castShadow = true
     this.bee.receiveShadow
-    this.bee.traverse(node => (node.castShadow = true))
 
     this.bee.traverse(node => {
       // list of meshes
       if (node instanceof THREE.Mesh) {
+        node.castShadow = true
         this.meshes.push(node)
       }
     })
 
-    console.log(this.meshes)
     this.animate()
     this.handlers()
 
-/*     TweenMax.to(
+    TweenMax.to(
       this.bee.position, this.animationSpeed, {
         y: Math.random() * (1 - 0) + 0 > 0.5
           ? `+=${Math.random() * 8}`
@@ -76,7 +78,7 @@ class Bee {
         repeat: -1
       }
     )
- */
+
     return this.getModel()
   }
 
@@ -90,13 +92,11 @@ class Bee {
   }
 
   handleMouseover (e) {
-    e.preventDefault()
     this.mouse.x = e.clientX / this.renderer.domElement.clientWidth * 2 - 1
     this.mouse.y = -(e.clientY / this.renderer.domElement.clientHeight) * 2 + 1
   }
 
   handleClick (e) {
-    e.preventDefault()
     console.log("clicked")
     this.raycaster.setFromCamera(this.mouse, this.camera)
 
