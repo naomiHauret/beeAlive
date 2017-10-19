@@ -38,10 +38,10 @@ app.get("/findAll", function (req, res) {
 
 app.get("/findOne", function (req, res) {
   Bee.find({
-    "_id": req.query._id,
+    "_id": req.query._id
   }, (error, result) => {
     if (error) {
-        res.send(error);
+      res.send(error);
     } else {
       if (result.length < 1) {
         res.send({"message": "Aucun résultat"})
