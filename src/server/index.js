@@ -4,30 +4,66 @@ const express = require("express");
 const app = express();
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
+const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 const beeSchema = new Schema({
-  id: String,
+  id: Object,
   author: String,
   message: String
 });
 const Bee = mongoose.model("Bee", beeSchema);
 
 mongoose.connect("mongodb://localhost:27017/beealive");
-Bee.find((error, result) => {
-  if (error) {
-    console.log("ERROR", error);
-  } else {
-    console.log("RESULT", result);
-  }
-});
 
 app.use(express.static("dist"));
 
-app.get("/", function (req, res) {
-  res.send("Hello World!")
-})
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.get("/findAll", function (req, res) {
+  Bee.find((error, result) => {
+    if (error) {
+      res.send(error);
+    } else {
+      if (result.lenght < 1) {
+        res.send({"message": "Aucuns résultats"})
+      } else {
+        res.send(result);
+      }
+    }
+  });
+});
+
+app.get("/findOne", function (req, res) {
+  Bee.find({
+    "_id": req.query._id,
+  }, (error, result) => {
+    if (error) {
+        res.send(error);
+    } else {
+      if (result.length < 1) {
+        res.send({"message": "Aucun résultat"})
+      } else {
+        res.send(result);
+      }
+    }
+  });
+});
+
+app.post("/create", function (req, res) {
+  Bee.create({
+    "author": req.body.author,
+    "message": req.body.message
+  }, (error, result) => {
+    if (error) {
+      res.send(error);
+    } else {
+      res.send(result);
+    }
+  });
+});
 
 server.listen(SERVER_PORT, () => {
   console.log(`Server servin' from good ol' port ${SERVER_PORT}`);
