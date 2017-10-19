@@ -19,6 +19,7 @@
   "author": "Naomi Hauret",
   "license": "MIT",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",
@@ -46,8 +47,8 @@
     "webpack-dev-server": "^2.9.1"
   },
   "dependencies": {
-    "es6-tween": "^3.8.24",
     "gsap": "^1.20.3",
+    "mongoose": "^4.12.1",
     "socket.io-client": "^2.0.3",
     "three": "^0.87.1"
   }
