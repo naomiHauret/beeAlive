@@ -22,46 +22,34 @@ app.use(express.static("dist"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.get("/findAll", function (req, res) {
+app.get("/findAll", (req, res) => {
   Bee.find((error, result) => {
     if (error) {
       res.send(error);
     } else {
-      if (result.lenght < 1) {
-        res.send({"message": "Aucuns résultats"})
-      } else {
-        res.send(result);
-      }
+      result.length < 1 ? res.send({"message": "Aucuns résultats"}) : res.send(result);
     }
   });
 });
 
-app.get("/findOne", function (req, res) {
+app.get("/findOne", (req, res) => {
   Bee.find({
     "_id": req.query._id
   }, (error, result) => {
     if (error) {
       res.send(error);
     } else {
-      if (result.length < 1) {
-        res.send({"message": "Aucun résultat"})
-      } else {
-        res.send(result);
-      }
+      result.length < 1 ? res.send({"message": "Aucun résultat"}) : res.send(result);
     }
   });
 });
 
-app.post("/create", function (req, res) {
+app.post("/create", (req, res) => {
   Bee.create({
     "author": req.body.author,
     "message": req.body.message
   }, (error, result) => {
-    if (error) {
-      res.send(error);
-    } else {
-      res.send(result);
-    }
+      error ? res.send(error) : res.send(result);
   });
 });
 
