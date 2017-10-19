@@ -2,7 +2,7 @@
     "extends": "standard",
     "rules": {
         "semi": [
-            1,
+            0,
             "never"
         ],
         "indent": [
