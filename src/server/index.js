@@ -14,19 +14,19 @@ const beeSchema = new Schema({
 });
 const Bee = mongoose.model("Bee", beeSchema);
 
-mongoose.connect('mongodb://localhost:27017/beealive');
+mongoose.connect("mongodb://localhost:27017/beealive");
 Bee.find((error, result) => {
-if(error) {
-console.log('ERROR', error);
-} else {
-console.log('RESULT', result);
-}
+  if (error) {
+    console.log("ERROR", error);
+  } else {
+    console.log("RESULT", result);
+  }
 });
 
 app.use(express.static("dist"));
 
-app.get('/', function (req, res) {
-  res.send('Hello World!')
+app.get("/", function (req, res) {
+  res.send("Hello World!")
 })
 
 server.listen(SERVER_PORT, () => {
