@@ -4,6 +4,15 @@ const express = require("express")
 const app = express()
 const server = require("http").Server(app)
 const io = require("socket.io")(server)
+const mongoose = require('mongoose')
+
+const Schema = mongoose.Schema
+const beeSchema = new Schema({
+  id: String,
+  author: String,
+  message: String
+})
+const Bee = mongoose.model('Bee', beeSchema)
 
 app.use(express.static("dist"))
 
