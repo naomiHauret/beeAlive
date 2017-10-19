@@ -13,10 +13,11 @@ class Bee {
     this.raycaster = new THREE.Raycaster()
     this.mouse = new THREE.Vector2()
     this.animate = this.animate.bind(this)
+    this.deg = 0
     this.x = Math.random() * 8
     this.y = Math.random() * 8
     this.z = Math.random() * 8
-    this.animationSpeed = Math.random() * 0.35
+    this.animationSpeed = Math.random() * (0.15 - 0.085) + 0.085
     return this.initialize()
   }
 
@@ -55,28 +56,27 @@ class Bee {
       }
     })
 
+    console.log(this.meshes)
     this.animate()
     this.handlers()
 
-    TweenMax.to(
+/*     TweenMax.to(
       this.bee.position, this.animationSpeed, {
-        y:
-          Math.random() * (1 - 0) + 0 > 0.5
-            ? `+=${Math.random() * (2.5 - 1) + 1}`
-            : `-=${Math.random() * (2.5 - 1) + 1}`,
-        x:
-          Math.random() * (1 - 0) + 0 > 0.5
-            ? `+=${Math.random() * (0.25 - 0.05) + 0.05}`
-            : `-=${Math.random() * (0.25 - 0.05) + 0.05}`,
-        z:
-          Math.random() * (1 - 0) + 0 > 0.5
-            ? `+=${Math.random() * (0.25 - 0.05) + 0.05}`
-            : `-=${Math.random() * (0.25 - 0.05) + 0.05}`,
+        y: Math.random() * (1 - 0) + 0 > 0.5
+          ? `+=${Math.random() * 8}`
+          : `-=${Math.random() * 8}`,
+        x: Math.random() * (1 - 0) + 0 > 0.5
+          ? `+=${Math.random() * 8}`
+          : `-=${Math.random() * 8}`,
+        z: Math.random() * (1 - 0) + 0 > 0.5
+          ? `+=${Math.random() * 8}`
+          : `-=${Math.random() * 8}`,
         ease: Power2.easeOut,
         yoyo: true,
         repeat: -1
       }
     )
+ */
     return this.getModel()
   }
 
@@ -89,32 +89,25 @@ class Bee {
     return this.bee
   }
 
-  handleHover (e) {
+  handleMouseover (e) {
+    e.preventDefault()
     this.mouse.x = e.clientX / this.renderer.domElement.clientWidth * 2 - 1
     this.mouse.y = -(e.clientY / this.renderer.domElement.clientHeight) * 2 + 1
-    this.raycaster.setFromCamera(this.mouse, this.camera)
-    let intersects = this.raycaster.intersectObjects(this.meshes)
-
-    if (intersects.length > 0) {
-      document.body.style.cursor = "pointer"
-      console.log("You hovered a bee")
-    } else {
-      document.body.style.cursor = "initial"
-      console.log("You didn't hover a bee")
-    }
   }
 
   handleClick (e) {
-    this.mouse.x = e.clientX / this.renderer.domElement.clientWidth * 2 - 1
-    this.mouse.y = -(e.clientY / this.renderer.domElement.clientHeight) * 2 + 1
+    e.preventDefault()
+    console.log("clicked")
     this.raycaster.setFromCamera(this.mouse, this.camera)
 
     let intersects = this.raycaster.intersectObjects(this.meshes)
 
     if (intersects.length > 0) {
+      console.log("clicked bee")
       TweenMax.to(this.bee.position, 0.5, {
-        z:
-            this.camera.position.z,
+        z: 5,
+        x: 5,
+        y: 5,
         ease: Power2.easeOut,
         yoyo: true,
         repeat: 1
@@ -125,7 +118,7 @@ class Bee {
   }
 
   handlers () {
-    window.addEventListener("mousemove", this.handleHover.bind(this))
+    window.addEventListener("mousemove", this.handleMouseover.bind(this))
     window.addEventListener("click", this.handleClick.bind(this))
   }
 }
