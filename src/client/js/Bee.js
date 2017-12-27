@@ -27,20 +27,41 @@ class Bee {
 
     // materials
     this.materials.white = new THREE.MeshBasicMaterial({
-      color: "#ffffff"
+      color: "#FFFFFF"
+    })
+    this.materials.yellow = new THREE.MeshBasicMaterial({
+      color: "#F6D268"
+    })
+    this.materials.black = new THREE.MeshBasicMaterial({
+      color: "#1E1D1C"
+    })
+
+    this.materials.grey = new THREE.MeshBasicMaterial({
+      color: "#494846"
     })
 
     // Groups
     this.bee = new THREE.Group()
+    this.head = new THREE.Group()
+    this.body = new THREE.Group()
+    this.wings = new THREE.Group()
 
     // Geometries
-    this.boxSquare = new THREE.BoxGeometry(1, 1, 1)
+    this.headBaseGeometry = new THREE.DodecahedronGeometry(1, 0)
+    this.headMuzzleGeometry = new THREE.CylinderGeometry(0.5, 1, 2, 3)
 
     // Meshes
-    this.square = new THREE.Mesh(this.boxSquare, this.materials.white)
+    this.headBase = new THREE.Mesh(this.headBaseGeometry, this.materials.black)
+    this.headMuzzle = new THREE.Mesh(this.headMuzzleGeometry, this.materials.yellow)
 
     // Buildings groups
-    this.bee.add(this.square)
+
+    this.head.add(this.headBase)
+    this.head.add(this.headMuzzle)
+    this.headMuzzle.position.x = 1.5
+    this.headMuzzle.rotation.w = 90
+
+    this.bee.add(this.head)
 
     // Positions
     this.bee.position.y = this.y
@@ -59,10 +80,10 @@ class Bee {
       }
     })
 
-    this.animate()
+    // this.animate()
     this.handlers()
 
-    TweenMax.to(
+/*     TweenMax.to(
       this.bee.position, this.animationSpeed, {
         y: Math.random() * (1 - 0) + 0 > 0.5
           ? `+=${Math.random() * 8}`
@@ -77,7 +98,7 @@ class Bee {
         yoyo: true,
         repeat: -1
       }
-    )
+    ) */
 
     return this.getModel()
   }
