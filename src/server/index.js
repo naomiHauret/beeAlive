@@ -45,6 +45,7 @@ app.get("/findOne", (req, res) => {
 });
 
 app.post("/create", (req, res) => {
+  // console.log(req.body);
   Bee.create({
     "author": req.body.author,
     "message": req.body.message
