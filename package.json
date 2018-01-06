@@ -7,8 +7,6 @@
     "start": "npm run start:server & npm run start:client",
     "start:client": "npm run build:client:dev && npm run wds",
     "start:server": "nodemon --exec babel-node src/server",
-    "precommit": "npm run lint:js",
-    "prepush": "npm run lint:js",
     "test:prod": "npm run build:client:prod && npm run wds",
     "build:client:dev": "npx cross-env NODE_ENV=dev && npx webpack",
     "build:client:prod": "npx rimraf dist && npx cross-env NODE_ENV=production && npx webpack",
