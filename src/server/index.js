@@ -44,11 +44,10 @@ app.get("/findOne", (req, res) => {
   });
 });
 
-app.post("/create", (req, res) => {
-  // console.log(req.body);
+app.get("/create", (req, res) => {
   Bee.create({
-    "author": req.body.author,
-    "message": req.body.message
+    "author": req.query.author,
+    "message": req.query.message
   }, (error, result) => {
     error ? res.send(error) : res.send(result);
   });
