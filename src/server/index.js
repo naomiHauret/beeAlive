@@ -50,7 +50,7 @@ app.post("/create", (req, res) => {
     "author": req.body.author,
     "message": req.body.message
   }, (error, result) => {
-      error ? res.send(error) : res.send(result);
+    error ? res.send(error) : res.send(result);
   });
 });
 
