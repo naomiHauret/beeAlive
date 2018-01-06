@@ -1,8 +1,12 @@
-// import background from "./../assets/img/..."
-// import backgroundMusic from "./../assets/sound/..."
 import * as THREE from "three"
 import TweenMax from "gsap"
 import threeOrbitControls from "./utils/OrbitControls"
+import badBackground from "./../assets/img/bad.jpg"
+import badBackgroundMusic from "./../assets/music/bad.mp3"
+// import mediumBackground from "./../assets/img/medium.jpg"
+// import mediumBackgroundMusic from "./../assets/music/medium.mp3"
+// import goodBackground from "./../assets/img/good.jpg"
+// import goodBackgroundMusic from "./../assets/music/good.mp3"
 
 import Bee from "./Bee"
 
@@ -11,6 +15,7 @@ class Scene {
     this.showAxisHelper = showAxisHelper
     this.showSpotlightHelper = showSpotlightHelper
     this.scene = new THREE.Scene()
+    this.background = ""
     this.light = new THREE.AmbientLight(0x404040)
     this.spotLight = new THREE.SpotLight(0xffffff)
     this.camera = new THREE.PerspectiveCamera(
@@ -20,7 +25,7 @@ class Scene {
       1000
     ) // field of view, aspect ratio (viewport size), near plane, far plane
     this.renderer = new THREE.WebGLRenderer({ antialias: true })
-    this.number = 15
+    this.number = 100
     this.bees = []
     this.animate = this.animate.bind(this)
 
@@ -32,8 +37,12 @@ class Scene {
     const OrbitControls = threeOrbitControls(THREE)
 
     // background
-    // const texture = new THREE.TextureLoader().load(background)
-    // this.scene.background = texture
+    if(this.number <= 25 ) {
+      this.background = badBackground
+    }
+  
+    const texture = new THREE.TextureLoader().load(this.background)
+    this.scene.background = texture
 
     // light
     this.scene.add(this.light)
@@ -44,10 +53,10 @@ class Scene {
     this.spotLight.decay = 7 // @TODO correct this
     this.spotLight.penumbra = 0.1 // @TODO correct this
 
-    // this.scene.add(this.spotLight)
+    this.scene.add(this.spotLight)
 
     // camera
-    this.camera.position.z = 10
+    this.camera.position.z = 50
     this.camera.position.y = 1
     this.camera.position.x = 25
 
@@ -69,10 +78,12 @@ class Scene {
     this.hive = new THREE.Group()
 
     for (let i = 0; i < this.number; i++) {
-      let bee = new Bee(this.renderer, this.camera, this.scene)
+      let bee = new Bee(this.renderer, this.camera, this.scene, this.number)
       this.bees.push(bee)
       this.hive.add(bee)
     }
+
+    this.hive.rotation.x = THREE.Math.degToRad(15)
 
     this.addElement(this.hive)
 

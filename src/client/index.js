@@ -10,4 +10,4 @@ socket.on("news", (data) => {
   socket.emit("other event", {my: "data"})
 })
 
-const ourScene = new Scene(true, true)
+const ourScene = new Scene(false, false)

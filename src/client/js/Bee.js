@@ -1,10 +1,8 @@
-/* eslint-disable no-unused-expressions */
-
 import * as THREE from "three"
 import TweenMax from "gsap"
 
 class Bee {
-  constructor (renderer, camera, scene) {
+  constructor (renderer, camera, scene, nb) {
     this.renderer = renderer
     this.camera = camera
     this.scene = scene
@@ -14,9 +12,9 @@ class Bee {
     this.mouse = new THREE.Vector2(0, 0)
     this.animate = this.animate.bind(this)
     this.deg = 0
-    this.x = Math.random() * 8
-    this.y = Math.random() * 8
-    this.z = Math.random() * 8
+    this.x = Math.random() * 20
+    this.y = Math.random() * 20
+    this.z = Math.random() * 20
     return this.initialize()
   }
 
@@ -152,7 +150,6 @@ class Bee {
     this.bee.castShadow = true
     this.bee.receiveShadow
     this.bee.rotation.x = THREE.Math.degToRad(90)
-
     this.bee.traverse(node => {
       // list of meshes
       if (node instanceof THREE.Mesh) {
@@ -229,5 +226,3 @@ class Bee {
 }
 
 export default Bee
-
-/* eslint-enable */
