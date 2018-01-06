@@ -204,13 +204,11 @@ class Bee {
   }
 
   handleClick (e) {
-    console.log("clicked")
     this.raycaster.setFromCamera(this.mouse, this.camera)
 
     let intersects = this.raycaster.intersectObjects(this.meshes)
 
     if (intersects.length > 0) {
-      console.log("clicked bee")
       TweenMax.to(this.bee.position, 0.5, {
         z: 5,
         x: 5,
