@@ -25,7 +25,7 @@ class Scene {
       1000
     ) // field of view, aspect ratio (viewport size), near plane, far plane
     this.renderer = new THREE.WebGLRenderer({ antialias: true })
-    this.number = 100
+    this.number = 15
     this.bees = []
     this.animate = this.animate.bind(this)
 
@@ -40,7 +40,7 @@ class Scene {
     if(this.number <= 25 ) {
       this.background = badBackground
     }
-  
+
     const texture = new THREE.TextureLoader().load(this.background)
     this.scene.background = texture
 
