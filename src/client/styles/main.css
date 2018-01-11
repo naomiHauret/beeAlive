@@ -1,3 +1,98 @@
+/*
+  - Typographies
+*/
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+/*
+  - Variables
+*/
+
+:root {
+  --counterSize: 7rem;
+  --popBorderWidth: 0.583333333em;
+  --popDistance: -0.583333333em;
+}
+
+/*
+ - Global layout
+*/
+html {
+  font-size: 16px;
+}
+
+body {
+  color: white;
+  font-family: "Montserrat", "Arial", "Helvetica", sans-serif;
+  height: 100vh;
+  margin: 0 auto;
+  overflow: hidden;
+  font-size: 1rem;
+}
+
+canvas {
+  height: 100%;
+  width: 100%;
+}
+
+.ui {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  z-index: 5;
+  align-items: center;
+}
+
+@media (min-width: 61.9375rem) { /* 991px */
+  .ui {
+    flex-direction: row;
+    padding: 0 1.875rem 1.875rem;
+  }
+}
+
+
+/*
+  Atomic utils classes
+*/
+
+/*
+ -- flex
+*/
+.fg-1 {
+  flex-grow: 1;
+}
+
+.fg-2 {
+  flex-grow: 2;
+}
+
+/*
+ -- margin
+*/
+
+.my-1 {
+  margin: 1rem 0;
+}
+
+@media (min-width: 61.9375rem) { /* 991px */
+  .my-md-0 {
+    margin: 0;
+  }
+}
+
+/*
+ -- text-align
+*/
+
+.text-center {
+  text-align: center;
+}
+
+/*
+  - Animations definition
+*/
 @-webkit-keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -22,102 +117,101 @@
   25% { transform: scale(1.1); }
   75% { transform: scale(0.9); }
 }
+
+/*
+ - Links
+*/
+
 a {
+  font-size: 1.25rem; /* 20px */
   background-color: #52a2fb;
   background-image: linear-gradient(45deg, #14e1fa 0%, #14e1fa 55%, #52a2fb 90%);
   background-position: 100% 0;
   background-size: 200% 200%;
-  border-radius: 50px;
-  box-shadow: 0 16px 32px 0 rgba(0, 40, 120, .35);
+  border-radius: 1.5em;
+  box-shadow: 0 0.8em 1.6em 0 rgba(0, 40, 120, .35);
   color: white;
-  font-family: 'Nunito', sans-serif;
-  font-size: 20px;
-  font-weight: 200;
-  line-height: 5;
-  padding: 15px 45px;
-  transition: all 0.5s ease;
+  font-weight: bold;
+  padding: 0.75em 2.25em;
+  transition: all 0.5s ease-in-out;
   text-decoration: none;
 }
+
 a:hover {
-  box-shadow: 0 0px 0px 0 rgba(0, 40, 120, 0);
+  box-shadow: 0 0 0 0 rgba(0, 40, 120, 0);
   background-position: 0 0;
-  color: white;
-  padding: 20px 55px;
+  padding: 1em 2.75em;
   text-decoration: none;
+  font-weight: bolder;
 }
-body {
-  color: white;
-  font-family: Arial, sans-serif;
-  height: 100vh;
-  margin: 0 auto;
-  overflow: hidden;
-}
-canvas {
-  height: 100%;
-  width: 100%;
-}
-footer {
-  bottom: 0;
-  left: 0;
-  position: absolute;
-}
+
 #number {
-  font-size: 35px;
-  line-height: 1.8;
+  font-size: 2.1875rem;
 }
+
 .about {
-    margin-top: 35px;
+    margin-top: 2.1875rem;
 }
-.compteur {
-  border: 4px solid rgba(255, 255, 255, .5);
+
+.counter {
+  border: 0.25rem solid rgba(255, 255, 255, .5);
   border-radius: 50%;
-  height: 100px;
-  text-align: center;
-  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column-reverse;
+  width: var(--counterSize);
+  height: var(--counterSize);
 }
-.compteur p {
+
+.counter p {
   margin: 0;
 }
-.compteur .bee {
-  font-size: 35px;
-  line-height: 0;
+
+.counter .bee {
+  font-size: 2.1875rem;
 }
+
 .pulse {
   -webkit-animation: 2s linear infinite pulse;
   animation: 2s linear infinite pulse;
 }
+
 .qs {
   cursor: pointer;
   display: inline-block;
   position: relative;
 }
+
 .qs:hover .pop {
   display: block;
-  -webkit-animation: fade-in .3s linear 1, move-up .3s linear 1;
+  animation: fade-in .3s linear 1, move-up .3s linear 1;
   animation: fade-in .3s linear 1, move-up .3s linear 1;
 }
+
 .pop {
-  background-color: rgba(255, 255, 255, .85);
-  border-radius: 5px;
-  bottom: 42px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, .4);
-  color: black;
-  display: none;
-  font-size: 12px;
-  right: -5px;
-  padding: 7px 10px;
+  font-size: 0.75rem; /* 12px */
   position: absolute;
-  width: 200px;
+  bottom: 3.5em;
+  background-color: rgba(255, 255, 255, .85);
+  border-radius: 0.416666667em;
+  box-shadow: 0 0 0.416666667em rgba(0, 0, 0, .4);
+  color: rgb(40, 45, 60);
+  display: none;
+  right: 0.416666667em;
+  padding: 0.583333333em 0.833333333em;
+  width: 16.666666667em;
   z-index: 4;
 }
+
 .pop::before {
-  border-top: 7px solid rgba(255, 255, 255, .85);
-  border-right: 7px solid transparent;
-  border-left: 7px solid transparent;
-  bottom: -7px;
-  content: '';
-  display: block;
-  left: 93%;
-  margin-left: -7px;
   position: absolute;
+  left: 93%;
+  bottom: var(--popDistance);
+  content: ' ';
+  display: block;
+  border-top: var(--popBorderWidth) solid rgba(255, 255, 255, .85);
+  border-right: var(--popBorderWidth) solid transparent;
+  border-left: var(--popBorderWidth) solid transparent;
+  margin-left:  var(--popDistance);
 }
