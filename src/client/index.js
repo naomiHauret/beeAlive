@@ -1,6 +1,7 @@
 import styles from './styles/main.css';
 import domready from 'domready';
 import io from 'socket.io-client';
+import swal from 'sweetalert2';
 import { SERVER_PORT } from './../shared/config';
 import Scene from './js/Scene';
 import 'whatwg-fetch';
@@ -14,13 +15,26 @@ socket.on('news', (data) => {
 });
 
 domready(() => {
+  const add_bee = document.querySelector('#send-bee');
+
   fetch(mongo +'findAll')
     .then((response) => response.json())
     .then((response) => {
-      console.log("WOW", response);
+      let nb_bees = response.length;
+
+      const ourScene = new Scene(false, false, nb_bees);
+      document.querySelector('#number').innerText = nb_bees;
     }
   );
-  document.querySelector('#number').innerText = 15; // remplacer par variable qui init nombre d'abeilles
-});
 
-const ourScene = new Scene(false, false);
+  add_bee.addEventListener('click', () => {
+    swal({
+      title: 'Do you want to send a bee ?',
+      text: 'You will not be able to recover this imaginary file!',
+      type: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, of course !',
+      cancelButtonText: 'No, thx I keep watchin\''
+    });
+  });
+});
