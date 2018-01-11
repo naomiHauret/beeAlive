@@ -30,8 +30,8 @@ domready(() => {
   add_bee.addEventListener('click', () => {
     swal({
       title: 'Do you want to send a bee ?',
-      text: 'You will not be able to recover this imaginary file!',
-      type: 'question',
+      text: 'You can attach a message and write your name !',
+      html: '<p class="label">Author :</p><input id="author" class="swal2-input" type="text" placeholder="Your author name" /><p class="label">Message :</p><input id="message" class="swal2-input type="text" placeholder="Your message here" />',
       showCancelButton: true,
       confirmButtonText: 'Yes, of course !',
       cancelButtonText: 'No, thx I keep watchin\''
