@@ -2,7 +2,7 @@ import * as THREE from "three"
 import TweenMax from "gsap"
 
 class Bee {
-  constructor (renderer, camera, scene, nb) {
+  constructor (renderer, camera, scene) {
     this.renderer = renderer
     this.camera = camera
     this.scene = scene
@@ -160,7 +160,7 @@ class Bee {
     })
 
     this.handlers()
-    
+
     TweenMax.to(
       this.wingLeft.rotation, 0.05, {
         z: 0.75,
@@ -191,7 +191,7 @@ class Bee {
       this.bee.position.y -= Math.sin(Math.random() * (0.25 - 0.05) + 0.05)
       this.bee.position.x += Math.sin(Math.random() * (0.25 - 0.05) + 0.05)
     }
-   
+
     this.renderer.render(this.scene, this.camera)
 
   }

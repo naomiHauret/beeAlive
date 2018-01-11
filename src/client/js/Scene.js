@@ -83,7 +83,7 @@ class Scene {
     this.hive = new THREE.Group()
 
     for (let i = 0; i < this.number; i++) {
-      let bee = new Bee(this.renderer, this.camera, this.scene, this.number)
+      let bee = new Bee(this.renderer, this.camera, this.scene)
       this.bees.push(bee)
       this.hive.add(bee)
     }
