@@ -79,7 +79,19 @@ module.exports = {
             }
           }
         ]
-      }
+      },
+      // Videos
+      {
+        test: /\.(mp4|avi|mkv)$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "assets/videos/[name].[ext]"
+            }
+          }
+        ]
+      },
     ]
   },
   plugins,

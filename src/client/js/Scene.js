@@ -1,12 +1,13 @@
 import * as THREE from "three"
 import TweenMax from "gsap"
-import threeOrbitControls from "./utils/OrbitControls"
 import badBackground from "./../assets/img/bad.jpg"
 import badBackgroundMusic from "./../assets/music/bad.mp3"
-// import mediumBackground from "./../assets/img/medium.jpg"
-// import mediumBackgroundMusic from "./../assets/music/medium.mp3"
-// import goodBackground from "./../assets/img/good.jpg"
-// import goodBackgroundMusic from "./../assets/music/good.mp3"
+import mediumBadBackground from "./../assets/img/mediumBad.jpg"
+import mediumBadBackgroundMusic from "./../assets/music/mediumBad.mp3"
+import mediumGoodBackground from "./../assets/img/mediumGood.png"
+import mediumGoodBackgroundMusic from "./../assets/music/mediumGood.mp3"
+import goodBackground from "./../assets/img/good.png"
+import goodBackgroundMusic from "./../assets/music/good.mp3"
 
 import Bee from "./Bee"
 
@@ -16,6 +17,13 @@ class Scene {
     this.showSpotlightHelper = showSpotlightHelper
     this.scene = new THREE.Scene()
     this.background = ""
+    this.audios = {
+      good: new Audio(goodBackgroundMusic),
+      mediumGood: new Audio(mediumGoodBackgroundMusic),
+      mediumBad: new Audio(mediumBadBackgroundMusic),
+      bad: new Audio(badBackgroundMusic)
+
+    }
     this.light = new THREE.AmbientLight(0x404040)
     this.spotLight = new THREE.SpotLight(0xffffff)
     this.camera = new THREE.PerspectiveCamera(
@@ -25,24 +33,24 @@ class Scene {
       1000
     ) // field of view, aspect ratio (viewport size), near plane, far plane
     this.renderer = new THREE.WebGLRenderer({ antialias: true })
-    this.number = 15
+    this.number = 20
     this.bees = []
+    this.t = 0 // time delta
+    this.configureScenery = this.configureScenery.bind(this)
+    this.addBee = this.addBee.bind(this)
     this.animate = this.animate.bind(this)
 
     return this.initialize()
   }
 
   initialize () {
-    // controls
-    const OrbitControls = threeOrbitControls(THREE)
-
-    // background
-    if(this.number <= 25 ) {
-      this.background = badBackground
-    }
-
+    // loopable audios
+    Object.keys(this.audios).map(audio => this.audios[audio].loop = true)
     const texture = new THREE.TextureLoader().load(this.background)
     this.scene.background = texture
+
+    // configure background and audio
+    this.configureScenery()
 
     // light
     this.scene.add(this.light)
@@ -50,13 +58,13 @@ class Scene {
     // spotlight
     this.spotLight.position.set(10, 15, 10)
     this.spotLight.castShadow = true
-    this.spotLight.decay = 7 // @TODO correct this
-    this.spotLight.penumbra = 0.1 // @TODO correct this
+    this.spotLight.decay = 7
+    this.spotLight.penumbra = 0.1
 
     this.scene.add(this.spotLight)
 
     // camera
-    this.camera.position.z = 50
+    this.camera.position.z = 100
     this.camera.position.y = 1
     this.camera.position.x = 25
 
@@ -71,9 +79,6 @@ class Scene {
     this.showSpotlightHelper && this.scene.add(this.spotLightHelper)
     this.showAxisHelper && this.scene.add(this.axisHelper)
 
-    // scene controls
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement)
-
     // mount scene
     this.hive = new THREE.Group()
 
@@ -83,60 +88,69 @@ class Scene {
       this.hive.add(bee)
     }
 
-    this.hive.rotation.x = THREE.Math.degToRad(15)
-
+    this.hive.rotation.x = THREE.Math.degToRad(25)
     this.addElement(this.hive)
-
-    TweenMax.to(this.hive.position, 3, {
-      y:
-        Math.random() * (1 - 0) + 0 > 0.5
-          ? `+=${Math.random() * (1.5 - 0.25) + 0.25}`
-          : `-=${Math.random() * (1.5 - 0.25) + 0.25}`,
-      x:
-        Math.random() * (1 - 0) + 0 > 0.5
-          ? `+=${Math.random() * (2.25 - 0.05) + 0.05}`
-          : `-=${Math.random() * (2.25 - 0.05) + 0.05}`,
-      z:
-        Math.random() * (1 - 0) + 0 > 0.5
-          ? `+=${Math.random() * (1.25 - 0.05) + 0.05}`
-          : `-=${Math.random() * (1.25 - 0.05) + 0.05}`,
-      ease: Power2.easeOut,
-      yoyo: true,
-      repeat: -1
-    })
 
     document.body.appendChild(this.renderer.domElement) // append a canvas to body
     this.animate()
     this.handlers()
   }
 
-  addElement (element) {
+  /*
+  * -- configure scenery (background to display, audio to play) of current Scene instance
+  */
+  configureScenery() {
+    Object.keys(this.audios).map(audio => {
+      this.audios[audio].pause()
+      this.audios[audio].currentTime = 0
+    })
+
+    // background
+    if (this.number <= 5) {
+      this.background = badBackground
+      this.audios.bad.play()
+    }
+    else if (this.number > 5 && this.number < 15) {
+      this.background = mediumBadBackground
+      this.audios.mediumBad.play()
+    }
+    else if (this.number > 15 && this.number < 20) {
+      this.background = mediumGoodBackground
+      this.audios.mediumGood.play()
+    }
+    else {
+      this.background = goodBackground
+      this.audios.good.play()
+    }
+
+    let texture = new THREE.TextureLoader().load(this.background)
+    this.scene.background = texture
+  }
+
+  /*
+  * -- add THREE element to current Scene instance
+  */
+  addElement(element) {
     this.scene.add(element)
   }
 
+  /*
+  * -- add bee to the hive
+  */
+  addBee(bee) {
+    this.hive.add(bee)
+    this.configureScenery()
+  }
+
+  /*
+  * -- animate current Scene instance
+  */
   animate () {
     requestAnimationFrame(this.animate)
+    this.t += 0.009
+    this.hive.position.x = Math.cos(this.t) + 0
+    this.hive.position.z = 10 * Math.sin(this.t) + 0
     this.renderer.render(this.scene, this.camera)
-  }
-
-  toggleAxisHelper () {
-    if (this.showAxisHelper === false) {
-      this.scene.add(this.axisHelper)
-      this.showAxisHelper = true
-    } else {
-      this.scene.remove(this.axisHelper)
-      this.showAxisHelper = false
-    }
-  }
-
-  toggleSpotLightHelper () {
-    if (this.showSpotlightHelper === false) {
-      this.scene.add(this.spotLightHelper)
-      this.showSpotlightHelper = true
-    } else {
-      this.scene.remove(this.spotLightHelper)
-      this.showSpotlightHelper = false
-    }
   }
 
   handleResize () {
