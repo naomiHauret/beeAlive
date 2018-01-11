@@ -13,7 +13,7 @@
     "wds": "npx webpack-dev-server --content-base dist/ --host 0.0.0.0 --watch-content-base",
     "deploy": "npm run build:client:prod && git add . && git commit -m ':rocket: deploy' && git push && git subtree push --prefix dist origin gh-pages"
   },
-  "author": "Naomi Hauret",
+  "author": "Naomi Hauret, Trystan Eveno",
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.26.0",
