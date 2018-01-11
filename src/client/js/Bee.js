@@ -12,9 +12,10 @@ class Bee {
     this.mouse = new THREE.Vector2(0, 0)
     this.animate = this.animate.bind(this)
     this.deg = 0
-    this.x = Math.random() * 15
-    this.y = Math.random() * 15
-    this.z = Math.random() * 10
+    this.x = Math.random() * 30
+    this.y = Math.random() * 25
+    this.z = Math.random() * 20
+    this.t = 0 // time delta
     return this.initialize()
   }
 
@@ -27,7 +28,7 @@ class Bee {
       color: "#FFFFFF"
     })
     this.materials.yellow = new THREE.MeshBasicMaterial({
-      color: "#F6D268"
+      color: "#FFAF47"
     })
     this.materials.black = new THREE.MeshBasicMaterial({
       color: "#1E1D1C"
@@ -158,48 +159,45 @@ class Bee {
       }
     })
 
-    // this.animate()
     this.handlers()
-
+    
     TweenMax.to(
-      this.bee.position, Math.random(), {
-        y: Math.random() * (1 - 0) + 0 > 0.5
-          ? `+=${Math.random() * (1.5 - 0.25) + 0.25}`
-          : `-=${Math.random() * (1.5 - 0.25) + 0.25}`,
-        yoyo: true,
-        repeat: -1
-      }
-    )
-
-    TweenMax.to(
-      this.wingLeft.rotation, 0.035, {
+      this.wingLeft.rotation, 0.05, {
         z: 0.75,
         yoyo: true,
         repeat: -1
       }
     )
     TweenMax.to(
-      this.wingRight.rotation, 0.035, {
+      this.wingRight.rotation, 0.05, {
         z: 0.75,
         yoyo: true,
         repeat: -1
       }
     )
+    this.animate()
     return this.getModel()
   }
 
   animate () {
     requestAnimationFrame(this.animate)
+    this.t += 0.4
+    if ((Math.random() * (1 - 0) + 0 )> 0.5) {
+      this.bee.position.y += Math.sin(Math.random() * (0.25 - 0.05) + 0.05)
+      this.bee.position.x -= Math.sin(Math.random() * (0.25 - 0.05) + 0.05)
+
+    }
+    else {
+      this.bee.position.y -= Math.sin(Math.random() * (0.25 - 0.05) + 0.05)
+      this.bee.position.x += Math.sin(Math.random() * (0.25 - 0.05) + 0.05)
+    }
+   
     this.renderer.render(this.scene, this.camera)
+
   }
 
   getModel () {
     return this.bee
-  }
-
-  handleMouseover (e) {
-    this.mouse.x = e.clientX / this.renderer.domElement.clientWidth * 2 - 1
-    this.mouse.y = -(e.clientY / this.renderer.domElement.clientHeight) * 2 + 1
   }
 
   handleClick (e) {
@@ -208,21 +206,14 @@ class Bee {
     let intersects = this.raycaster.intersectObjects(this.meshes)
 
     if (intersects.length > 0) {
-      TweenMax.to(this.bee.position, 0.5, {
-        z: 5,
-        x: 5,
-        y: 5,
-        ease: Power2.easeOut,
-        yoyo: true,
-        repeat: 1
-      })
-
-      window.navigator.vibrate(2000)
+     //
+     // print associated message...
+     //
+      window.navigator.vibrate(700)
     }
   }
 
   handlers () {
-    window.addEventListener("mousemove", this.handleMouseover.bind(this))
     window.addEventListener("click", this.handleClick.bind(this))
   }
 }
