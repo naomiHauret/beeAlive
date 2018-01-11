@@ -38,9 +38,11 @@
   },
   "dependencies": {
     "body-parser": "^1.18.2",
+    "domready": "^1.0.8",
     "gsap": "^1.20.3",
     "mongoose": "^5.0.0-rc2",
     "socket.io-client": "^2.0.3",
-    "three": "^0.89.0"
+    "three": "^0.89.0",
+    "whatwg-fetch": "^2.0.3"
   }
 }
