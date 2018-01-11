@@ -171,6 +171,11 @@ a:hover {
   font-size: 2.1875rem;
 }
 
+.label {
+  margin: 0;
+  text-align: left;
+}
+
 .pulse {
   -webkit-animation: 2s linear infinite pulse;
   animation: 2s linear infinite pulse;
@@ -213,4 +218,8 @@ a:hover {
   border-right: var(--popBorderWidth) solid transparent;
   border-left: var(--popBorderWidth) solid transparent;
   margin-left:  var(--popDistance);
+}
+
+.swal2-title {
+  margin-bottom: 30px !important;
 }

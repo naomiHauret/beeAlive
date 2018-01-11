@@ -1,7 +1,7 @@
 # 🐝 Bee Alive
 
 A live demo is available [here](https://naomihauret.github.io/beeAlive).
-This project was realised as an assessment for our creative coding class. 
+This project was realised as an assessment for our creative coding class.
 It's a teamwork with [@MaitreManuel](https://github.com/MaitreManuel) :muscle:
 
 ---
@@ -36,6 +36,7 @@ This project was born from this constat : no bees, no life. Here, we're explorin
 * Clone this repo on your computer
 * `cd` to its folder
 * `npm install`
+* Install database [here](https://github.com/naomiHauret/beeAlive/blob/master/doc/DATABASE.md)
 
 ### Run
 * Start client only : `npm run start:client`
