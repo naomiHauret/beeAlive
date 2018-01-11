@@ -8,8 +8,8 @@
     "start:client": "npm run build:client:dev && npm run wds",
     "start:server": "nodemon --exec babel-node src/server",
     "test:prod": "npm run build:client:prod && npm run wds",
-    "build:client:dev": "npx cross-env NODE_ENV=dev && npx webpack",
-    "build:client:prod": "npx rimraf dist && npx cross-env NODE_ENV=production && npx webpack",
+    "build:client:dev": "npx cross-env NODE_ENV=dev webpack",
+    "build:client:prod": "npx rimraf dist && npx cross-env NODE_ENV=production webpack",
     "wds": "npx webpack-dev-server --content-base dist/ --host 0.0.0.0 --watch-content-base",
     "deploy": "npm run build:client:prod && git add . && git commit -m ':rocket: deploy' && git push && git subtree push --prefix dist origin gh-pages"
   },
