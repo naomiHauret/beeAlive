@@ -3,10 +3,10 @@ import TweenMax from "gsap"
 import threeOrbitControls from "./utils/OrbitControls"
 import badBackground from "./../assets/img/bad.jpg"
 import badBackgroundMusic from "./../assets/music/bad.mp3"
-// import mediumBackground from "./../assets/img/medium.jpg"
-// import mediumBackgroundMusic from "./../assets/music/medium.mp3"
-// import goodBackground from "./../assets/img/good.jpg"
-// import goodBackgroundMusic from "./../assets/music/good.mp3"
+import mediumBackground from "./../assets/img/medium.png"
+import mediumBackgroundMusic from "./../assets/music/medium.mp3"
+import goodBackground from "./../assets/img/good.jpg"
+import goodBackgroundMusic from "./../assets/music/good.mp3"
 
 import Bee from "./Bee"
 
@@ -25,7 +25,11 @@ class Scene {
       1000
     ) // field of view, aspect ratio (viewport size), near plane, far plane
     this.renderer = new THREE.WebGLRenderer({ antialias: true })
+<<<<<<< HEAD
     this.number = 15
+=======
+    this.number = 5
+>>>>>>> added images assets
     this.bees = []
     this.animate = this.animate.bind(this)
 
@@ -40,6 +44,15 @@ class Scene {
     if(this.number <= 25 ) {
       this.background = badBackground
     }
+<<<<<<< HEAD
+=======
+    else if (this.number > 25 && this.number < 75){
+      this.background = mediumBackground
+    }
+    else {
+      this.background = goodBackground
+    }
+>>>>>>> added images assets
 
     const texture = new THREE.TextureLoader().load(this.background)
     this.scene.background = texture
@@ -56,7 +69,7 @@ class Scene {
     this.scene.add(this.spotLight)
 
     // camera
-    this.camera.position.z = 50
+    this.camera.position.z = 100
     this.camera.position.y = 1
     this.camera.position.x = 25
 

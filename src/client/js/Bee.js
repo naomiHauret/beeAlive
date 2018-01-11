@@ -12,9 +12,9 @@ class Bee {
     this.mouse = new THREE.Vector2(0, 0)
     this.animate = this.animate.bind(this)
     this.deg = 0
-    this.x = Math.random() * 20
-    this.y = Math.random() * 20
-    this.z = Math.random() * 20
+    this.x = Math.random() * 15
+    this.y = Math.random() * 15
+    this.z = Math.random() * 10
     return this.initialize()
   }
 
@@ -162,8 +162,10 @@ class Bee {
     this.handlers()
 
     TweenMax.to(
-      this.bee.position, 1.25, {
-        y: Math.random() * 5,
+      this.bee.position, Math.random(), {
+        y: Math.random() * (1 - 0) + 0 > 0.5
+          ? `+=${Math.random() * (1.5 - 0.25) + 0.25}`
+          : `-=${Math.random() * (1.5 - 0.25) + 0.25}`,
         yoyo: true,
         repeat: -1
       }
