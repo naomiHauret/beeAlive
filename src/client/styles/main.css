@@ -11,6 +11,10 @@
   --counterSize: 7rem;
   --popBorderWidth: 0.583333333em;
   --popDistance: -0.583333333em;
+  --textColorDark:  rgb(40, 45, 60);
+  --uiZindex: 2;
+  --popZindex: 3;
+  --loadinScreenZindex: 6;
 }
 
 /*
@@ -41,7 +45,7 @@ canvas {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  z-index: 5;
+  z-index: var(--uiZindex);
   align-items: center;
 }
 
@@ -51,7 +55,6 @@ canvas {
     padding: 0 1.875rem 1.875rem;
   }
 }
-
 
 /*
   Atomic utils classes
@@ -116,6 +119,16 @@ canvas {
 @keyframes pulse {
   25% { transform: scale(1.1); }
   75% { transform: scale(0.9); }
+}
+
+@keyframes fly {
+  from {
+    transform: translateY(-105%);
+  }
+
+  to {
+    transform: translateY(-25%);
+  }
 }
 
 /*
@@ -196,12 +209,12 @@ a:hover {
   background-color: rgba(255, 255, 255, .85);
   border-radius: 0.416666667em;
   box-shadow: 0 0 0.416666667em rgba(0, 0, 0, .4);
-  color: rgb(40, 45, 60);
+  color: var(--textColorDark);
   display: none;
   right: 0.416666667em;
   padding: 0.583333333em 0.833333333em;
   width: 16.666666667em;
-  z-index: 4;
+  z-index: var(--popZindex);
 }
 
 .pop::before {
@@ -214,4 +227,61 @@ a:hover {
   border-right: var(--popBorderWidth) solid transparent;
   border-left: var(--popBorderWidth) solid transparent;
   margin-left:  var(--popDistance);
+}
+
+/*
+ - Loading screen
+*/
+
+.loading {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  z-index: var(--loadinScreenZindex);
+  background-color: rgb(10, 10, 20);
+  color: white;
+  font-size: 2rem;
+  font-weight: bolder;
+  letter-spacing: 0.09375em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: 750ms ease-in-out all;
+}
+
+.loading .icon {
+  margin-bottom: 1.25rem;
+}
+
+.loadingAnimation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.icons-wrapper {
+  display: flex;
+}
+
+.audio {
+  letter-spacing: 0;
+  color: rgb(200, 200, 230);
+  font-size: 1rem;
+}
+
+.bee-icon {
+  animation: fly 750ms infinite alternate ease-in-out;
+}
+
+.audio p {
+  margin: 2rem 0;
+}
+
+.is-done .loading {
+  max-height: 0;
 }
