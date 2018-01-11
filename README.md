@@ -37,6 +37,27 @@ This project was born from this constat : no bees, no life. Here, we're explorin
 * `cd` to its folder
 * `npm install`
 * Install database [here](https://github.com/naomiHauret/beeAlive/blob/master/doc/DATABASE.md)
+* You need to execute this bach command :
+
+On Linux 16.04 and above :
+```
+ifconfig | grep 'inet addr' | cut -d: -f2 | awk '{print $1}' | tail -n1
+```
+On Linux 14.04 and earlier:
+```
+ifconfig | grep 'inet adr' | cut -d: -f2 | awk '{print $1}' | tail -n1
+```
+On MAC:
+```
+ifconfig | grep "inet " | grep -v 127.0.0.1 | cut -d\  -f2
+```
+Then keep this address and past it instead of XXX.XXX.X.XXX
+* In `src/client/index.js`, you need to change `ip` variable :
+```
+const ip = '192.168.1.144';
+const mongo = 'http://'+ ip +':3000/';
+```
+Then follow steps in next part. You really need to do this, else SocketIO and your front won't work.
 
 ### Run
 * Start client only : `npm run start:client`

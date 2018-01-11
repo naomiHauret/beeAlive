@@ -8,7 +8,8 @@ import Scene from './js/Scene';
 import 'whatwg-fetch';
 
 const socket = io.connect(`http://localhost:${SERVER_PORT}`);
-const mongo = 'http://localhost:3000/';
+const ip = '192.168.1.144';
+const mongo = 'http://'+ ip +':3000/';
 
 socket.on('news', (data) => {
   console.log(data);
