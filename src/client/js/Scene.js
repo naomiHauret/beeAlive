@@ -39,8 +39,25 @@ class Scene {
     this.configureScenery = this.configureScenery.bind(this)
     this.addBee = this.addBee.bind(this)
     this.animate = this.animate.bind(this)
+    this.setNumber = this.setNumber.bind(this)
 
     return this.initialize()
+  }
+
+  getCamera() {
+    return this.camera;
+  }
+
+  getRenderer() {
+    return this.renderer;
+  }
+
+  getScene() {
+    return this.scene;
+  }
+
+  setNumber(number) {
+    this.number = number;
   }
 
   initialize () {
