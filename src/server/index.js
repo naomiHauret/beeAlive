@@ -62,6 +62,7 @@ app.get("/create", (req, res) => {
 server.listen(SERVER_PORT, () => {
   console.log(`Server servin' from good ol' port ${SERVER_PORT}`);
   console.log(`Client listenin' on port ${CLIENT_PORT}`);
+  console.log('Don\'t forget to change your the IP in client/index.js to get stuff running !' );
 });
 
 io.on("connection", (socket) => {

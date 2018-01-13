@@ -7,8 +7,9 @@ import Bee from "./js/Bee";
 import Scene from "./js/Scene";
 import "whatwg-fetch";
 
+const loadingScreen = document.querySelector('[data-flag="loadingScreen"]');
 const socket = io.connect(`http://localhost:${SERVER_PORT}`);
-const ip = "192.168.1.144";
+const ip = "192.168.0.16";
 const mongo = "http://" + ip + ":3000/";
 
 socket.on("news", data => {
@@ -22,6 +23,12 @@ domready(() => {
   let ourScene = "";
 
   getBees(ourScene, compteur, add_bee, "new");
+  setTimeout(() => {
+    loadingScreen.classList.add("is-done");
+    setTimeout(() => {
+      document.body.removeChild(loadingScreen);
+    }, 900);
+  }, 2000);
 });
 
 const getBees = (ourScene, compteur, add_bee, trigger) => {
