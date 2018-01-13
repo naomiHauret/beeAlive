@@ -28,7 +28,7 @@ domready(() => {
     setTimeout(() => {
       document.body.removeChild(loadingScreen);
     }, 900);
-  }, 2000);
+  }, 3500);
 });
 
 const getBees = (ourScene, compteur, add_bee, trigger) => {

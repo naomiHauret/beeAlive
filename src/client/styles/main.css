@@ -275,7 +275,7 @@ a:hover {
 
 .audio {
   letter-spacing: 0;
-  color: rgb(200, 200, 230);
+  color: currentColor;
   font-size: 1rem;
 }
 
@@ -289,6 +289,7 @@ a:hover {
 
 .is-done .loading {
   max-height: 0;
+  color: transparent;
 }
 
 .swal2-title {
