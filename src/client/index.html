@@ -36,6 +36,17 @@
 
         <div class="ui">
             <div class="fg-1 my-1 my-md-0">
+                <label class="range-wrapper">
+                    <input type="range" min="0" max="25" step="1" list="tickmarks" data-flag="beeRange" />
+
+                    <datalist id="tickmarks">
+                        <option value="0" data-indicator="☠️">
+                        <option value="6" data-indicator="💩" />
+                        <option value="16" data-indicator="😓" />
+                        <option value="21" data-indicator="❤️" />
+                    </datalist>
+                </label>
+
                 <div class="counter">
                     <p id="number"></p>
                     <p class="bee pulse">🐝</p>
@@ -49,7 +60,7 @@
             <div class="fg-1 my-1 my-md-0 text-center">
                 <p class="about">
                     <span class="qs">
-                        Help
+                        Info
                         <span class="text-center pop">Need help ?</span>
                     </span>
                 </p>

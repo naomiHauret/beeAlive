@@ -16,6 +16,7 @@ class Scene {
     this.showAxisHelper = showAxisHelper
     this.showSpotlightHelper = showSpotlightHelper
     this.scene = new THREE.Scene()
+    this.mode = ""
     this.background = ""
     this.audios = {
       good: new Audio(goodBackgroundMusic),
@@ -38,8 +39,10 @@ class Scene {
     this.t = 0 // time delta
     this.configureScenery = this.configureScenery.bind(this)
     this.addBee = this.addBee.bind(this)
+    this.removeBeesFromHive = this.removeBeesFromHive.bind(this)
     this.animate = this.animate.bind(this)
     this.setNumber = this.setNumber.bind(this)
+    this.stopAudio = this.stopAudio.bind(this)
 
     return this.initialize()
   }
@@ -56,6 +59,10 @@ class Scene {
     return this.scene;
   }
 
+  getNumber() {
+    return this.number;
+  }
+
   setNumber(number) {
     this.number = number;
   }
@@ -64,6 +71,7 @@ class Scene {
     // loopable audios
     Object.keys(this.audios).map(audio => this.audios[audio].loop = true)
     const texture = new THREE.TextureLoader().load(this.background)
+    this.scene.background = new THREE.Color(0xff0000)
     this.scene.background = texture
 
     // configure background and audio
@@ -117,33 +125,52 @@ class Scene {
   * -- configure scenery (background to display, audio to play) of current Scene instance
   */
   configureScenery() {
+    let changedBackground = false
+
+    if (this.number <= 5 && this.mode !== "bad") {
+      this.stopAudio()
+      this.background = badBackground
+      this.audios.bad.play()
+      this.mode = "bad"
+      changedBackground = true
+    }
+    else if (this.number > 5 && this.number < 15 && this.mode !== "mediumBad") {
+      this.stopAudio()
+      this.background = mediumBadBackground
+      this.audios.mediumBad.play()
+      this.mode = "mediumBad"
+      changedBackground = true;
+    }
+    else if (this.number > 15 && this.number < 20 && this.mode !== "mediumGood") {
+      this.stopAudio()
+      this.background = mediumGoodBackground
+      this.audios.mediumGood.play()
+      this.mode = "mediumGood"
+      changedBackground = true
+    }
+    else if (this.number > 20 && this.mode !== "good") {
+      this.stopAudio()
+      this.background = goodBackground
+      this.audios.good.play()
+      this.mode = "good"
+      changedBackground = true
+    }
+
+    if(changedBackground === true) {
+      let texture = new THREE.TextureLoader().load(this.background)
+      this.scene.background = texture
+    }
+  }
+
+  /*
+  * -- stop current song
+  */
+  stopAudio() {
     Object.keys(this.audios).map(audio => {
       this.audios[audio].pause()
       this.audios[audio].currentTime = 0
     })
-
-    // background
-    if (this.number <= 5) {
-      this.background = badBackground
-      this.audios.bad.play()
-    }
-    else if (this.number > 5 && this.number < 15) {
-      this.background = mediumBadBackground
-      this.audios.mediumBad.play()
-    }
-    else if (this.number > 15 && this.number < 20) {
-      this.background = mediumGoodBackground
-      this.audios.mediumGood.play()
-    }
-    else {
-      this.background = goodBackground
-      this.audios.good.play()
-    }
-
-    let texture = new THREE.TextureLoader().load(this.background)
-    this.scene.background = texture
   }
-
   /*
   * -- add THREE element to current Scene instance
   */
@@ -159,6 +186,15 @@ class Scene {
     this.configureScenery()
   }
 
+  /*
+  * -- remove x bees from hive
+  */
+  removeBeesFromHive(nb) {
+    for (let i = 0; i < nb; i++) {
+      this.hive.remove(this.hive.children[i]);
+      this.configureScenery();
+    }
+  }
   /*
   * -- animate current Scene instance
   */
