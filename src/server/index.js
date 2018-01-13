@@ -62,10 +62,17 @@ app.get("/create", (req, res) => {
 server.listen(SERVER_PORT, () => {
   console.log(`Server servin' from good ol' port ${SERVER_PORT}`);
   console.log(`Client listenin' on port ${CLIENT_PORT}`);
-  console.log('Don\'t forget to change your the IP in client/index.js to get stuff running !' );
+  console.log('Don\'t forget to change your IP in client/index.js to get stuff running !' );
 });
 
 io.on("connection", (socket) => {
-  socket.emit("news", {hello: "world"});
-  socket.on("other event", data => console.log);
+  socket.on("addBee", (data) => {
+    Bee.find((error, result) => {
+      if (error) {
+        res.send(error);
+      } else {
+        result.length < 1 ? res.send({"message": "Aucuns résultats"}) : io.emit("newBee", { ourScene: data.ourScene, compteur: result.length });
+      }
+    });
+  });
 });

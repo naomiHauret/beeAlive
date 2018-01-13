@@ -8,14 +8,23 @@ import Scene from "./js/Scene";
 import "whatwg-fetch";
 
 const loadingScreen = document.querySelector('[data-flag="loadingScreen"]');
-const socket = io.connect(`http://localhost:${SERVER_PORT}`);
-const ip = "192.168.0.16";
-const mongo = "http://" + ip + ":3000/";
+const ip = "192.168.0.18";
+const url = `http://`+ ip +`:${SERVER_PORT}`
+const socket = io(url);
+const mongo = url +'/';
 const range = document.querySelector('[data-flag="beeRange"]');
 
-socket.on("news", data => {
-  console.log(data);
-  socket.emit("other event", { my: "data" });
+socket.on("newBee", (data) => {
+  let ourScene = new Scene(false, false, data.compteur);
+
+  ourScene.addBee(
+    new Bee(
+      ourScene.getRenderer(),
+      ourScene.getCamera(),
+      ourScene.getScene()
+    )
+  );
+  getBees(ourScene, document.querySelector("#number"), false, false);
 });
 
 domready(() => {
@@ -68,14 +77,8 @@ const getBees = (ourScene, compteur, add_bee, trigger) => {
               )
                 .then(response => response.json())
                 .then(response => {
-                  ourScene.addBee(
-                    new Bee(
-                      ourScene.getRenderer(),
-                      ourScene.getCamera(),
-                      ourScene.getScene()
-                    )
-                  );
-                  getBees(ourScene, compteur, false, false);
+
+                  socket.emit("addBee", { ourScene: ourScene, compteur: compteur });
                 });
             } else if (
               result.value &&
