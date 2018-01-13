@@ -11,6 +11,7 @@ const loadingScreen = document.querySelector('[data-flag="loadingScreen"]');
 const socket = io.connect(`http://localhost:${SERVER_PORT}`);
 const ip = "192.168.0.16";
 const mongo = "http://" + ip + ":3000/";
+const range = document.querySelector('[data-flag="beeRange"]');
 
 socket.on("news", data => {
   console.log(data);
@@ -89,9 +90,33 @@ const getBees = (ourScene, compteur, add_bee, trigger) => {
             }
           });
         });
+        ["input", "change"].forEach(event => {
+          range.addEventListener(event, ()=> {
+            let nb_bees = range.value;
+            let prev_number = ourScene.getNumber();
+            if(nb_bees > prev_number) {
+              let nb_to_add = nb_bees - prev_number;
+              for(let i = 0; i < nb_to_add ; i++) {
+                ourScene.addBee(
+                  new Bee(
+                    ourScene.getRenderer(),
+                    ourScene.getCamera(),
+                    ourScene.getScene()
+                  )
+                );
+              }
+            } else {
+              let nb_to_remove = prev_number - nb_bees;
+              ourScene.removeBeesFromHive(nb_to_remove);
+            }
+            ourScene.setNumber(nb_bees);
+            compteur.innerText = nb_bees;
+            })
+        })
       }
 
       ourScene.setNumber(nb_bees);
       compteur.innerText = nb_bees;
+      range.value = nb_bees;
     });
 };
