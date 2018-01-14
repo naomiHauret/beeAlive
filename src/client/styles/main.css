@@ -94,31 +94,73 @@ canvas {
 }
 
 /*
+ -- Visibility
+*/
+.is-hidden {
+  display: none;
+}
+
+/*
   - Animations definition
 */
 @-webkit-keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
+
 @keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
+
 @-webkit-keyframes move-up {
-	from   { bottom: 30px; }
-	to { bottom: 42px; }
+	from   {
+    bottom: 30px;
+  }
+
+	to {
+    bottom: 42px;
+  }
 }
+
 @keyframes move-up {
-	from   { bottom: 30px; }
-	to { bottom: 42px; }
+	from {
+    bottom: 30px;
+  }
+
+	to {
+    bottom: 42px;
+  }
 }
+
 @-webkit-keyframes pulse {
-  25% { -webkit-transform: scale(1.1); }
-  75% { -webkit-transform: scale(0.9); }
+  25% {
+    -webkit-transform: scale(1.1);
+  }
+
+  75% {
+    -webkit-transform: scale(0.9);
+  }
 }
+
 @keyframes pulse {
-  25% { transform: scale(1.1); }
-  75% { transform: scale(0.9); }
+  25% {
+    transform: scale(1.1);
+  }
+
+  75% {
+    transform: scale(0.9);
+  }
 }
 
 @keyframes fly {
@@ -128,6 +170,16 @@ canvas {
 
   to {
     transform: translateY(-25%);
+  }
+}
+
+@keyframes backdropAnimation {
+  from {
+      backdrop-filter: blur(0);
+  }
+
+  to {
+    backdrop-filter: blur(5px);
   }
 }
 
@@ -158,12 +210,17 @@ a:hover {
   font-weight: bolder;
 }
 
-#number {
-  font-size: 2.1875rem;
-}
 
 .about {
     margin-top: 2.1875rem;
+}
+
+/*
+* -- counter
+*/
+
+#number {
+  font-size: 2.1875rem;
 }
 
 .counter {
@@ -298,8 +355,42 @@ a:hover {
   -- SweetAlert
 */
 
+.swal2-container {
+  animation: backdropAnimation linear 250ms forwards;
+}
+
+.swal2-modal {
+  padding: 1.875rem !important;
+}
+
+.swal2-contentwrapper,
+.swal2-container button,
+.swal2-container input,
+.swal2-container textarea {
+  font-family: "Montserrat", "Arial", "Helvetica", sans-serif;
+}
+
+
+.swal2-container textarea {
+  height: unset !important;
+  padding: 0.75rem !important;
+}
+
+.swal2-container button,
+.swal2-container .label {
+  font-weight: 800 !important;
+}
+
 .swal2-title {
-  margin-bottom: 30px !important;
+  margin-bottom: 1.875rem !important;
+}
+
+.swal2-container button {
+  border-radius: 1.875rem !important;
+}
+
+.swal2-confirm {
+  background: linear-gradient(to left, rgb(152, 242, 146), rgb(8, 241, 177)) !important;
 }
 
 
@@ -309,41 +400,42 @@ a:hover {
 .range-wrapper {
   display: block;
   cursor: pointer;
-  position: fixed;
-  top: 3rem;
-  left: 50%;
-  transform: translateX(-50%);
 }
 
 .range-wrapper input {
   cursor: col-resize;
+  width: 100%;
 }
 
 .range-wrapper datalist {
   display: flex;
   top: -60%;
+  font-size: 2.25rem;
+}
+
+.range-wrapper.is-hidden datalist {
+  display: none;
 }
 
 .range-wrapper option {
   padding: 0;
 }
 
-.range-wrapper  option::after {
-  content: attr(data-indicator);
+/*
+-- Mode wrapper
+*/
+
+.mode-wrapper {
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%);
+  left: 5.875rem;
+  display: flex;
+  flex-direction: column;
 }
 
-.range-wrapper option:nth-child(1) {
-  margin-left: -1px;
-}
-
-.range-wrapper option:nth-child(2) {
-  margin-left: 14px;
-}
-
-.range-wrapper option:nth-child(3) {
-  margin-left: 32px;
-}
-
-.range-wrapper option:nth-child(4) {
-  margin-left: 7px;
+.mode-wrapper label {
+  margin: 0.875rem 0;
+  cursor: pointer;
+  font-weight: 800;
 }

@@ -8,7 +8,7 @@ import Scene from "./js/Scene";
 import "whatwg-fetch";
 
 const loadingScreen = document.querySelector('[data-flag="loadingScreen"]');
-const ip = "192.168.0.18";
+const ip = "192.168.0.16";
 const url = `http://`+ ip +`:${SERVER_PORT}`
 const socket = io(url);
 const mongo = url +'/';
@@ -29,9 +29,18 @@ socket.on("newBee", (data) => {
 
 domready(() => {
   const add_bee = document.querySelector("#send-bee");
+  const modeTogglers = document.querySelectorAll('[data-flag="modeToggler"]');
   const compteur = document.querySelector("#number");
-  let ourScene = "";
+  add_bee.classList.add('is-hidden');
 
+  modeTogglers.forEach(toggler => {
+    toggler.addEventListener("change", e => {
+      add_bee.classList.toggle('is-hidden');
+      range.classList.toggle("is-hidden");
+    });
+  });
+
+  let ourScene = "";
   getBees(ourScene, compteur, add_bee, "new");
   setTimeout(() => {
     loadingScreen.classList.add("is-done");
@@ -52,44 +61,27 @@ const getBees = (ourScene, compteur, add_bee, trigger) => {
 
         add_bee.addEventListener("click", () => {
           swal({
-            title: "Do you want to send a bee ?",
-            text: "You can attach a message and write your name !",
+            title: "Do you want to add your bee to the hive ?",
             html:
-              '<p class="label">Author :</p><input id="author" class="swal2-input" type="text" placeholder="Your author name" /><p class="label">Message :</p><input id="message" class="swal2-input type="text" placeholder="Your message here" />',
+              '<p>You just have to attach a message and write your name !</p><p class="label">Your pseudo :</p><input id="author" class="swal2-input" type="text" placeholder="John Doe" required /><p class="label">Your message :</p><textarea id="message" class="swal2-input" placeholder="Bees are awesome !" required></textarea>',
             showCancelButton: true,
-            confirmButtonText: "Yes, of course !",
-            cancelButtonText: "No, thx I keep watchin'"
+            confirmButtonText: "✔ Add my bee",
+            cancelButtonText: "Cancel"
           }).then(result => {
             let author = document.querySelector("#author"),
               message = document.querySelector("#message");
 
-            if (
-              result.value &&
-              author.value.length > 0 &&
-              message.value.length > 0
-            ) {
-              fetch(
-                mongo +
-                  "create?author=" +
-                  author.value +
-                  "&message=" +
-                  message.value
-              )
+            if (result.value && author.value.length > 0 && message.value.length > 0) {
+              fetch(mongo + "create?author=" + author.value + "&message=" + message.value)
                 .then(response => response.json())
                 .then(response => {
-
-                  socket.emit("addBee", { ourScene: ourScene, compteur: compteur });
+                  socket.emit("addBee", {
+                    ourScene: ourScene,
+                    compteur: compteur
+                  });
                 });
-            } else if (
-              result.value &&
-              author.value.length < 1 &&
-              message.value.length < 1
-            ) {
-              swal(
-                "Error",
-                "Hey deep shit, write your name and a message before sending a bee !!!",
-                "error"
-              );
+            } else if (result.value && author.value.length < 1 && message.value.length < 1) {
+              swal("Uh oh, missing info ¯_(ツ)_/¯", "You have to write your pseudo and your message to send a bee !", "error");
             }
           });
         });
