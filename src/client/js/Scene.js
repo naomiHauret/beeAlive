@@ -43,6 +43,7 @@ class Scene {
     this.animate = this.animate.bind(this)
     this.setNumber = this.setNumber.bind(this)
     this.stopAudio = this.stopAudio.bind(this)
+    this.clear = this.clear.bind(this)
 
     return this.initialize()
   }
@@ -119,6 +120,16 @@ class Scene {
     document.body.appendChild(this.renderer.domElement) // append a canvas to body
     this.animate()
     this.handlers()
+  }
+
+  /*
+  * -- clear all meshes
+  */
+  clear() {
+    for (let i = this.hive.children.length - 1; i >= 0; i--) {
+      this.hive.remove(this.hive.children[i]);
+    }
+    this.configureScenery();
   }
 
   /*
