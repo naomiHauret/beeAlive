@@ -211,9 +211,15 @@ a:hover {
   font-weight: bolder;
 }
 
+/*
+* -- about
+*/
 
 .about {
-    margin-top: 2.1875rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: white;
 }
 
 /*
@@ -252,46 +258,6 @@ a:hover {
 .pulse {
   -webkit-animation: 2s linear infinite pulse;
   animation: 2s linear infinite pulse;
-}
-
-.qs {
-  font-weight: bold;
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-}
-
-.qs:hover .pop {
-  display: block;
-  animation: fade-in .3s linear 1, move-up .3s linear 1;
-  animation: fade-in .3s linear 1, move-up .3s linear 1;
-}
-
-.pop {
-  font-size: 0.75rem; /* 12px */
-  position: absolute;
-  bottom: 3.5em;
-  background-color: rgba(255, 255, 255, .85);
-  border-radius: 0.416666667em;
-  box-shadow: 0 0 0.416666667em rgba(0, 0, 0, .4);
-  color: var(--textColorDark);
-  display: none;
-  right: 0.416666667em;
-  padding: 0.583333333em 0.833333333em;
-  width: 16.666666667em;
-  z-index: var(--popZindex);
-}
-
-.pop::before {
-  position: absolute;
-  left: 93%;
-  bottom: var(--popDistance);
-  content: ' ';
-  display: block;
-  border-top: var(--popBorderWidth) solid rgba(255, 255, 255, .85);
-  border-right: var(--popBorderWidth) solid transparent;
-  border-left: var(--popBorderWidth) solid transparent;
-  margin-left:  var(--popDistance);
 }
 
 /*
@@ -394,6 +360,23 @@ a:hover {
   background: linear-gradient(to left, rgb(152, 242, 146), rgb(8, 241, 177)) !important;
 }
 
+.swal2-container.no-background .swal2-modal {
+  background-color: transparent !important;
+}
+
+.swal2-container.no-background .swal2-title,
+.swal2-container.no-background .swal2-content {
+  color: white;
+}
+
+.swal2-container.no-background .swal2-content {
+  line-height: 1.75;
+}
+
+.swal2-container.no-background button {
+  border: white solid 2px !important;
+  background: transparent !important;
+}
 
 /*
   -- Range

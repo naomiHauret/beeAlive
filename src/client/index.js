@@ -8,7 +8,7 @@ import Scene from "./js/Scene";
 import "whatwg-fetch";
 
 const loadingScreen = document.querySelector('[data-flag="loadingScreen"]');
-const ip = "192.168.0.18";
+const ip = "192.168.0.16";
 const url = `http://`+ ip +`:${SERVER_PORT}`
 const socket = io(url);
 const mongo = url +'/';
@@ -16,6 +16,8 @@ const range = document.querySelector('[data-flag="beeRange"]');
 const add_bee = document.querySelector("#send-bee");
 const modeTogglers = document.querySelectorAll('[data-flag="modeToggler"]');
 const compteur = document.querySelector("#number");
+const aboutTrigger = document.querySelector('[data-flag="triggerExplanations"]')
+
 range.classList.add("is-hidden");
 
 console.log(add_bee)
@@ -145,6 +147,39 @@ const getBees = (ourScene, compteur, add_bee, trigger) => {
             range.classList.toggle("is-hidden");
             add_bee.classList.toggle("is-hidden");
           });
+        });
+
+        aboutTrigger.addEventListener('click', ()=> {
+          let text = ""
+          let title = ""
+
+          switch(ourScene.mode) {
+            case "bad":
+              title = "💀 All life is gone";
+              text = "Is it Mars or Hell ? You don't really know. In fact, the only thing you're sure is that this place has nothing in common with the Earth you once knew. There's no life left here. With more than 99% of bees gone, over 90% of our food resources disappeared and things turned to something that reminds you of the Apocalypse. All life disappeared from Earth..."
+            break;
+
+            case "mediumBad":
+              title = "🔥 Apocalypse now";
+              text = "bleps"
+            break;
+
+            case "mediumGood":
+              title = "You're here ☟";
+               text= "blaps"
+            break;
+
+            case "good":
+              title = "🌻 What a wonderful world";
+              text = "feeling gooooood"
+            break;
+          }
+          swal({
+            title,
+            text,
+            button: "Back to the world"
+          });
+          document.querySelector(".swal2-container").classList.add('no-background');
         });
       }
 
