@@ -28,7 +28,7 @@ class Scene {
     this.light = new THREE.AmbientLight(0x404040)
     this.spotLight = new THREE.SpotLight(0xffffff)
     this.camera = new THREE.PerspectiveCamera(
-      35,
+      45,
       window.innerWidth / window.innerHeight,
       0.1,
       1000
@@ -200,8 +200,8 @@ class Scene {
   */
   animate () {
     requestAnimationFrame(this.animate)
-    this.t += 0.009
-    this.hive.position.x = Math.cos(this.t) + 0
+    this.t += 0.005
+    this.hive.position.x = 20 * Math.cos(this.t) + 0
     this.hive.position.z = 10 * Math.sin(this.t) + 0
     this.renderer.render(this.scene, this.camera)
   }

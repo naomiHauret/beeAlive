@@ -35,17 +35,17 @@
         </div>
 
         <div class="ui">
-            <div class="fg-1 my-1 my-md-0">
-                <label class="range-wrapper">
-                    <input type="range" min="0" max="25" step="1" list="tickmarks" data-flag="beeRange" />
-
-                    <datalist id="tickmarks">
-                        <option value="0" data-indicator="☠️">
-                        <option value="6" data-indicator="💩" />
-                        <option value="16" data-indicator="😓" />
-                        <option value="21" data-indicator="❤️" />
-                    </datalist>
+            <div class="mode-wrapper">
+                <label for="modeSpectator">
+                    <input type="radio" name="mode" id="modeSpectator" data-flag="modeToggler" value="spectator" checked/>
+                    Spectator
                 </label>
+                <label for="modeWorker">
+                    <input type="radio" name="mode" id="modeWorker" value="worker" data-flag="modeToggler" />
+                    Worker
+                </label>
+            </div>
+            <div class="fg-1 my-1 my-md-0">
 
                 <div class="counter">
                     <p id="number"></p>
@@ -53,8 +53,18 @@
                 </div>
 
             </div>
-            <div class="fg-2 my-1 my-md-0 text-center">
+            <div class="fg-2 my-1 my-md-0 text-center" data-flag="injectInput">
                 <a id="send-bee" href="javascript:void(0);">Send bee</a>
+                <label class="range-wrapper" data-inject="rangeWrapper">
+                    <input type="range" min="0" max="25" step="1" list="tickmarks" data-flag="beeRange" />
+
+                    <datalist id="tickmarks">
+                        <option value="0" data-indicator="☠️">
+                            <option value="6" data-indicator="💩" />
+                            <option value="16" data-indicator="😓" />
+                            <option value="21" data-indicator="❤️" />
+                    </datalist>
+                </label>
             </div>
 
             <div class="fg-1 my-1 my-md-0 text-center">
