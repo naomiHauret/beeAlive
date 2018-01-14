@@ -35,17 +35,29 @@
         </div>
 
         <div class="ui">
+            <div class="mode-wrapper">
+                <svg class="filter" version="1.1">
+                    <defs>
+                        <filter id="gooeyness">
+                            <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" />
+                            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -10" result="gooey" />
+                            <feComposite in="SourceGraphic" in2="gooey" operator="atop" />
+                        </filter>
+                    </defs>
+                </svg>
+                <div class="radios-boxes">
+                    <div class="radios">
+                        <input type="radio" name="mode" id="modeSpectator" class="radio" data-flag="modeToggler" value="spectator" checked/>
+                        <input type="radio" name="mode" id="modeWorker" class="radio" value="worker" data-flag="modeToggler" />
+                        <div class="ball pos1"></div>
+                    </div>
+                    <div class="labels">
+                        <label for="radio1" class="label">Spectator</label>
+                        <label for="radio2" class="label">Worker</label>
+                    </div>
+                </div>
+            </div>
             <div class="fg-1 my-1 my-md-0">
-                <label class="range-wrapper">
-                    <input type="range" min="0" max="25" step="1" list="tickmarks" data-flag="beeRange" />
-
-                    <datalist id="tickmarks">
-                        <option value="0" data-indicator="☠️">
-                        <option value="6" data-indicator="💩" />
-                        <option value="16" data-indicator="😓" />
-                        <option value="21" data-indicator="❤️" />
-                    </datalist>
-                </label>
 
                 <div class="counter">
                     <p id="number"></p>
@@ -53,8 +65,18 @@
                 </div>
 
             </div>
-            <div class="fg-2 my-1 my-md-0 text-center">
+            <div class="fg-2 my-1 my-md-0 text-center" data-flag="injectInput">
                 <a id="send-bee" href="javascript:void(0);">Send bee</a>
+                <label class="range-wrapper" data-inject="rangeWrapper">
+                    <input type="range" min="0" max="25" step="1" list="tickmarks" data-flag="beeRange" />
+
+                    <datalist id="tickmarks">
+                        <option value="0" data-indicator="☠️">
+                            <option value="6" data-indicator="💩" />
+                            <option value="16" data-indicator="😓" />
+                            <option value="21" data-indicator="❤️" />
+                    </datalist>
+                </label>
             </div>
 
             <div class="fg-1 my-1 my-md-0 text-center">

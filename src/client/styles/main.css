@@ -418,8 +418,7 @@ a:hover {
 .mode-wrapper {
   position: fixed;
   top: 50%;
-  transform: translate(-50%);
-  left: 5.875rem;
+  transform: translateY(-50%);
   display: flex;
   flex-direction: column;
 }
@@ -428,4 +427,92 @@ a:hover {
   margin: 0.875rem 0;
   cursor: pointer;
   font-weight: 800;
+}
+
+
+
+
+
+.filter {
+  left: -9999px;
+  position: absolute;
+}
+
+.burger {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+}
+
+.radios-boxes {
+  display: flex;
+}
+
+.radios {
+  display: flex;
+  filter: url('#gooeyness');
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.radio {
+  border-radius: 50%;
+  border: 10px solid #ccc;
+  cursor: pointer;
+  height: 40px;
+  margin: 10px;
+  outline: 0;
+  width: 40px;
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-transition: border-color 800ms;
+  transition: border-color 800ms;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.radio.active {
+  border-color: white;
+}
+
+.ball {
+  background: white;
+  border-radius: 50%;
+  height: 34px;
+  left: 13px;
+  pointer-events: none;
+  position: absolute;
+  top: 13px;
+  width: 34px;
+  -webkit-transform: translateY(-80px);
+  transform: translateY(-80px);
+  transition: transform 800ms;
+  -webkit-transition: transform 800ms;
+}
+
+.ball.pos0 {
+  transform: translateY(0px);
+}
+
+.ball.pos1 {
+  transform: translateY(60px);
+}
+
+.labels {
+  margin-left: 5px;
+}
+
+.label {
+  color: #cccccc;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  padding: 10px 0;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 800ms;
+}
+
+.label.active {
+  color: white;
 }

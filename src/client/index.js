@@ -8,7 +8,7 @@ import Scene from "./js/Scene";
 import "whatwg-fetch";
 
 const loadingScreen = document.querySelector('[data-flag="loadingScreen"]');
-const ip = "192.168.0.16";
+const ip = "192.168.0.18";
 const url = `http://`+ ip +`:${SERVER_PORT}`
 const socket = io(url);
 const mongo = url +'/';
@@ -48,6 +48,23 @@ domready(() => {
       document.body.removeChild(loadingScreen);
     }, 900);
   }, 3500);
+
+
+  let radios = document.querySelectorAll('.radio');
+  let labels = document.querySelectorAll('.label');
+  let ball = document.querySelector('.ball');
+  let prevRadio, prevLabel;
+  radios.forEach((radio, index) => {
+    radio.addEventListener('click', function(e) {
+      if (prevRadio) prevRadio.classList.toggle('active');
+      if (prevLabel) prevLabel.classList.toggle('active');
+      radio.classList.toggle('active');
+      prevRadio = radio;
+      labels[index].classList.toggle('active');
+      prevLabel = labels[index];
+      ball.className = `ball pos${index}`;
+    });
+  });
 });
 
 const getBees = (ourScene, compteur, add_bee, trigger) => {
