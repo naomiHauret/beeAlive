@@ -407,16 +407,6 @@ a:hover {
   width: 100%;
 }
 
-.range-wrapper datalist {
-  display: flex;
-  top: -60%;
-  font-size: 2.25rem;
-}
-
-.range-wrapper.is-hidden datalist {
-  display: none;
-}
-
 .range-wrapper option {
   padding: 0;
 }
