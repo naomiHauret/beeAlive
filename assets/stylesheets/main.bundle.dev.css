@@ -51,7 +51,7 @@ canvas {
 @media (min-width: 61.9375rem) { /* 991px */
   .ui {
     flex-direction: row;
-    padding: 0 1.875rem 1.875rem;
+    padding: 0 0 1.875rem 0;
   }
 }
 
@@ -174,6 +174,7 @@ a:hover {
   flex-direction: column-reverse;
   width: var(--counterSize);
   height: var(--counterSize);
+  transform: translateX(1.875rem);
 }
 
 .counter p {
@@ -195,6 +196,7 @@ a:hover {
 }
 
 .qs {
+  font-weight: bold;
   cursor: pointer;
   display: inline-block;
   position: relative;
@@ -274,7 +276,7 @@ a:hover {
 
 .audio {
   letter-spacing: 0;
-  color: rgb(200, 200, 230);
+  color: currentColor;
   font-size: 1rem;
 }
 
@@ -288,8 +290,59 @@ a:hover {
 
 .is-done .loading {
   max-height: 0;
+  color: transparent;
 }
+
+/*
+  -- SweetAlert
+*/
 
 .swal2-title {
   margin-bottom: 30px !important;
+}
+
+
+/*
+  -- Range
+*/
+.range-wrapper {
+  display: block;
+  cursor: pointer;
+  position: fixed;
+  top: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.range-wrapper input {
+  cursor: col-resize;
+}
+
+.range-wrapper datalist {
+  display: flex;
+  top: -60%;
+}
+
+.range-wrapper option {
+  padding: 0;
+}
+
+.range-wrapper  option::after {
+  content: attr(data-indicator);
+}
+
+.range-wrapper option:nth-child(1) {
+  margin-left: -1px;
+}
+
+.range-wrapper option:nth-child(2) {
+  margin-left: 14px;
+}
+
+.range-wrapper option:nth-child(3) {
+  margin-left: 32px;
+}
+
+.range-wrapper option:nth-child(4) {
+  margin-left: 7px;
 }
