@@ -50,7 +50,7 @@ domready(() => {
   let ball = document.querySelector('.ball');
   let prevRadio, prevLabel;
   radios.forEach((radio, index) => {
-    radio.addEventListener('click', function(e) {
+    radio.addEventListener('click', (e) => {
       if (prevRadio) prevRadio.classList.toggle('active');
       if (prevLabel) prevLabel.classList.toggle('active');
       radio.classList.toggle('active');

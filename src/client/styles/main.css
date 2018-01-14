@@ -200,6 +200,7 @@ a {
   padding: 0.75em 2.25em;
   transition: all 0.5s ease-in-out;
   text-decoration: none;
+  margin-left: -6rem;
 }
 
 a:hover {
@@ -428,9 +429,6 @@ a:hover {
   cursor: pointer;
   font-weight: 800;
 }
-
-
-
 
 
 .filter {
