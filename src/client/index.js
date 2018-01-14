@@ -13,7 +13,12 @@ const url = `http://`+ ip +`:${SERVER_PORT}`
 const socket = io(url);
 const mongo = url +'/';
 const range = document.querySelector('[data-flag="beeRange"]');
+const add_bee = document.querySelector("#send-bee");
+const modeTogglers = document.querySelectorAll('[data-flag="modeToggler"]');
+const compteur = document.querySelector("#number");
+range.classList.add("is-hidden");
 
+console.log(add_bee)
 socket.on("newBee", (data) => {
   let ourScene = new Scene(false, false, data.compteur);
 
@@ -28,20 +33,10 @@ socket.on("newBee", (data) => {
 });
 
 domready(() => {
-  const add_bee = document.querySelector("#send-bee");
-  const modeTogglers = document.querySelectorAll('[data-flag="modeToggler"]');
-  const compteur = document.querySelector("#number");
-  add_bee.classList.add('is-hidden');
-
-  modeTogglers.forEach(toggler => {
-    toggler.addEventListener("change", e => {
-      add_bee.classList.toggle('is-hidden');
-      range.classList.toggle("is-hidden");
-    });
-  });
 
   let ourScene = "";
   getBees(ourScene, compteur, add_bee, "new");
+
   setTimeout(() => {
     loadingScreen.classList.add("is-done");
     setTimeout(() => {
@@ -55,7 +50,7 @@ domready(() => {
   let ball = document.querySelector('.ball');
   let prevRadio, prevLabel;
   radios.forEach((radio, index) => {
-    radio.addEventListener('click', function(e) {
+    radio.addEventListener('click', (e) => {
       if (prevRadio) prevRadio.classList.toggle('active');
       if (prevLabel) prevLabel.classList.toggle('active');
       radio.classList.toggle('active');
@@ -76,7 +71,8 @@ const getBees = (ourScene, compteur, add_bee, trigger) => {
       if (trigger === "new") {
         ourScene = new Scene(false, false, nb_bees);
 
-        add_bee.addEventListener("click", () => {
+        if(add_bee) {
+          add_bee.addEventListener("click", () => {
           swal({
             title: "Do you want to add your bee to the hive ?",
             html:
@@ -85,23 +81,24 @@ const getBees = (ourScene, compteur, add_bee, trigger) => {
             confirmButtonText: "✔ Add my bee",
             cancelButtonText: "Cancel"
           }).then(result => {
-            let author = document.querySelector("#author"),
-              message = document.querySelector("#message");
+              let author = document.querySelector("#author"),
+                message = document.querySelector("#message");
 
-            if (result.value && author.value.length > 0 && message.value.length > 0) {
-              fetch(mongo + "create?author=" + author.value + "&message=" + message.value)
-                .then(response => response.json())
-                .then(response => {
-                  socket.emit("addBee", {
-                    ourScene: ourScene,
-                    compteur: compteur
+              if (result.value && author.value.length > 0 && message.value.length > 0) {
+                fetch(mongo + "create?author=" + author.value + "&message=" + message.value)
+                  .then(response => response.json())
+                  .then(response => {
+                    socket.emit("addBee", {
+                      ourScene: ourScene,
+                      compteur: compteur
+                    });
                   });
-                });
-            } else if (result.value && author.value.length < 1 && message.value.length < 1) {
-              swal("Uh oh, missing info ¯_(ツ)_/¯", "You have to write your pseudo and your message to send a bee !", "error");
-            }
+              } else if (result.value && author.value.length < 1 && message.value.length < 1) {
+                swal("Uh oh, missing info ¯\_(ツ)_/¯", "You have to write your pseudo and your message to send a bee !", "error");
+              }
+            });
           });
-        });
+        }
         ["input", "change"].forEach(event => {
           range.addEventListener(event, ()=> {
             let nb_bees = range.value;
@@ -125,6 +122,30 @@ const getBees = (ourScene, compteur, add_bee, trigger) => {
             compteur.innerText = nb_bees;
             })
         })
+
+
+        modeTogglers.forEach(toggler => {
+          toggler.addEventListener("change", e => {
+            if(e.currentTarget.value === "worker") {
+               ourScene.clear();
+              fetch(mongo + "findAll")
+                .then(response => response.json())
+                .then(response => {
+                  let nb_bees = response.length ? response.length : 0;
+                  ourScene.setNumber(nb_bees);
+                  for (let i = 0; i < nb_bees; i++) {
+                    ourScene.addBee(new Bee(ourScene.getRenderer(), ourScene.getCamera(), ourScene.getScene()));
+                  }
+                  compteur.innerText = nb_bees;
+                  range.value = nb_bees;
+                }
+              );
+
+            }
+            range.classList.toggle("is-hidden");
+            add_bee.classList.toggle("is-hidden");
+          });
+        });
       }
 
       ourScene.setNumber(nb_bees);
