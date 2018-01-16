@@ -1,7 +1,9 @@
 import styles from "./styles/main.css";
+import toastr_styles from "../../node_modules/toastr/build/toastr.css";
 import domready from "domready";
 import io from "socket.io-client";
 import swal from "sweetalert2";
+import toastr from "toastr";
 import { SERVER_PORT } from "./../shared/config";
 import Bee from "./js/Bee";
 import Scene from "./js/Scene";
@@ -32,6 +34,8 @@ socket.on("newBee", (data) => {
     )
   );
   getBees(ourScene, document.querySelector("#number"), false, false);
+
+  toastr.success('Hey look at this newborn !', 'New bee', { "progressBar": true, });
 });
 
 domready(() => {

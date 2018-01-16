@@ -44,6 +44,7 @@
     "socket.io-client": "^2.0.3",
     "sweetalert2": "^7.3.5",
     "three": "^0.89.0",
+    "toastr": "^2.1.4",
     "whatwg-fetch": "^2.0.3"
   }
 }

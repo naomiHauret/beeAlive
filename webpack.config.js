@@ -42,19 +42,17 @@ module.exports = {
       // CSS files or stylesheets
       {
         test: /\.css$/,
-        exclude: /node_modules/,
-        loader: ["css-hot-loader"].concat(
-          extractCSS.extract({
-            use: [
-              {
-                loader: "css-loader",
-                options: {
-                  importLoaders: 1
-                }
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 1
               }
-            ]
-          })
-        )
+            },
+          ]
+        })
       },
       // Images
       {

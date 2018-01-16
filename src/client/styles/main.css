@@ -341,6 +341,7 @@ a:hover {
 .swal2-container textarea {
   height: unset !important;
   padding: 0.75rem !important;
+  resize: none;
 }
 
 .swal2-container button,
