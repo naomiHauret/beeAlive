@@ -8,7 +8,7 @@ import Scene from "./js/Scene";
 import "whatwg-fetch";
 
 const loadingScreen = document.querySelector('[data-flag="loadingScreen"]');
-const ip = "192.168.0.16";
+const ip = "192.168.0.18";
 const url = `http://`+ ip +`:${SERVER_PORT}`
 const socket = io(url);
 const mongo = url +'/';
@@ -22,7 +22,7 @@ range.classList.add("is-hidden");
 
 console.log(add_bee)
 socket.on("newBee", (data) => {
-  let ourScene = new Scene(false, false, data.compteur);
+  let ourScene = new Scene(false, false, data.bees);
 
   ourScene.addBee(
     new Bee(
@@ -68,10 +68,11 @@ const getBees = (ourScene, compteur, add_bee, trigger) => {
   fetch(mongo + "findAll")
     .then(response => response.json())
     .then(response => {
+      console.log(response);
       let nb_bees = response.length ? response.length : 0;
 
       if (trigger === "new") {
-        ourScene = new Scene(false, false, nb_bees);
+        ourScene = new Scene(false, false, response);
 
         if(add_bee) {
           add_bee.addEventListener("click", () => {

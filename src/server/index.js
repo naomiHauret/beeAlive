@@ -71,7 +71,7 @@ io.on("connection", (socket) => {
       if (error) {
         res.send(error);
       } else {
-        result.length < 1 ? res.send({"message": "Aucuns résultats"}) : io.emit("newBee", { ourScene: data.ourScene, compteur: result.length });
+        result.length < 1 ? res.send({"message": "Aucuns résultats"}) : io.emit("newBee", { ourScene: data.ourScene, bees: result });
       }
     });
   });

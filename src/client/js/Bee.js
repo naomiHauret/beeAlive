@@ -1,11 +1,14 @@
 import * as THREE from "three"
 import TweenMax from "gsap"
+import swal from "sweetalert2";
 
 class Bee {
-  constructor(renderer, camera, scene) {
+  constructor(renderer, camera, scene, author, message) {
     this.renderer = renderer;
     this.camera = camera;
     this.scene = scene;
+    this.author = author ? author : 'Author';
+    this.message = message ? message : 'Message';
     this.meshes = [];
     this.materials = {};
     this.raycaster = new THREE.Raycaster();
@@ -250,9 +253,12 @@ class Bee {
     let intersects = this.raycaster.intersectObjects(this.meshes);
 
     if (intersects.length > 0) {
-      //
-      // print associated message...
-      //
+      console.log('cc');
+      swal({
+        title: this.author,
+        text: this.message,
+        confirmButtonText: "✔ Ok"
+      });
       window.navigator.vibrate(700);
     }
   }

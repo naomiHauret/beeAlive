@@ -12,7 +12,7 @@ import goodBackgroundMusic from "./../assets/music/good.mp3"
 import Bee from "./Bee"
 
 class Scene {
-  constructor(showAxisHelper, showSpotlightHelper, nb_bees) {
+  constructor(showAxisHelper, showSpotlightHelper, bees_server) {
     this.showAxisHelper = showAxisHelper;
     this.showSpotlightHelper = showSpotlightHelper;
     this.scene = new THREE.Scene();
@@ -33,7 +33,8 @@ class Scene {
       1000
     ); // field of view, aspect ratio (viewport size), near plane, far plane
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
-    this.number = nb_bees;
+    this.bees_server = bees_server;
+    this.number = bees_server.length;
     this.bees = [];
     this.t = 0; // time delta
     this.configureScenery = this.configureScenery.bind(this);
@@ -112,7 +113,7 @@ class Scene {
     this.hive = new THREE.Group();
 
     for (let i = 0; i < this.number; i++) {
-      let bee = new Bee(this.renderer, this.camera, this.scene);
+      let bee = new Bee(this.renderer, this.camera, this.scene, this.bees_server[i].author, this.bees_server[i].message);
       this.bees.push(bee);
       this.hive.add(bee);
     }
