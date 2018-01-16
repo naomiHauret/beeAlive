@@ -67,11 +67,13 @@ server.listen(SERVER_PORT, () => {
 
 io.on("connection", (socket) => {
   socket.on("addBee", (data) => {
-    Bee.find((error, result) => {
+    Bee.find({
+      "_id": data._id
+    }, (error, result) => {
       if (error) {
         res.send(error);
       } else {
-        result.length < 1 ? res.send({"message": "Aucuns résultats"}) : io.emit("newBee", { ourScene: data.ourScene, bees: result });
+        result.length < 1 ? res.send({"message": "Aucuns résultats"}) : io.emit("newBee", { bees: result });
       }
     });
   });

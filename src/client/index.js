@@ -10,7 +10,7 @@ import Scene from "./js/Scene";
 import "whatwg-fetch";
 
 const loadingScreen = document.querySelector('[data-flag="loadingScreen"]');
-const ip = "192.168.0.10";
+const ip = "192.168.0.18";
 const url = `http://`+ ip +`:${SERVER_PORT}`
 const socket = io(url);
 const mongo = url +'/';
@@ -22,24 +22,7 @@ const aboutTrigger = document.querySelector('[data-flag="triggerExplanations"]')
 
 range.classList.add("is-hidden");
 
-console.log(add_bee)
-socket.on("newBee", (data) => {
-  let ourScene = new Scene(false, false, data.bees);
-
-  ourScene.addBee(
-    new Bee(
-      ourScene.getRenderer(),
-      ourScene.getCamera(),
-      ourScene.getScene()
-    )
-  );
-  getBees(ourScene, document.querySelector("#number"), false, false);
-
-  toastr.success('Hey look at this newborn !', 'New bee', { "progressBar": true, });
-});
-
 domready(() => {
-
   let ourScene = "";
   getBees(ourScene, compteur, add_bee, "new");
 
@@ -72,11 +55,25 @@ const getBees = (ourScene, compteur, add_bee, trigger) => {
   fetch(mongo + "findAll")
     .then(response => response.json())
     .then(response => {
-      console.log(response);
       let nb_bees = response.length ? response.length : 0;
 
       if (trigger === "new") {
         ourScene = new Scene(false, false, response);
+
+        socket.on("newBee", (data) => {
+          ourScene.addBee(
+            new Bee(
+              ourScene.getRenderer(),
+              ourScene.getCamera(),
+              ourScene.getScene(),
+              data.bees[0].author,
+              data.bees[0].message,
+            )
+          );
+          getBees(ourScene, document.querySelector("#number"), false, false);
+
+          toastr.success('Hey look at this newborn !', 'New bee', { "progressBar": true, "preventDuplicates": true });
+        });
 
         if(add_bee) {
           add_bee.addEventListener("click", () => {
@@ -95,10 +92,7 @@ const getBees = (ourScene, compteur, add_bee, trigger) => {
                 fetch(mongo + "create?author=" + author.value + "&message=" + message.value)
                   .then(response => response.json())
                   .then(response => {
-                    socket.emit("addBee", {
-                      ourScene: ourScene,
-                      compteur: compteur
-                    });
+                    socket.emit("addBee", { _id: response._id });
                   });
               } else if (result.value && author.value.length < 1 && message.value.length < 1) {
                 swal("Uh oh, missing info ¯\_(ツ)_/¯", "You have to write your pseudo and your message to send a bee !", "error");
