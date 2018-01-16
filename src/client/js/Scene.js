@@ -18,6 +18,9 @@ class Scene {
     this.scene = new THREE.Scene();
     this.mode = "";
     this.background = "";
+    this.meshes = [];
+    this.raycaster = new THREE.Raycaster();
+    this.mouse = new THREE.Vector2(0, 0);
     this.audios = {
       good: new Audio(goodBackgroundMusic),
       mediumGood: new Audio(mediumGoodBackgroundMusic),
@@ -44,6 +47,7 @@ class Scene {
     this.setNumber = this.setNumber.bind(this);
     this.stopAudio = this.stopAudio.bind(this);
     this.clear = this.clear.bind(this);
+    this.updateMeshes = this.updateMeshes.bind(this)
 
     return this.initialize();
   }
@@ -73,6 +77,9 @@ class Scene {
   }
 
   initialize() {
+    // Ray caster
+    this.raycaster.ray.direction.set(0, -1, 0);
+
     // loopable audios
     Object.keys(this.audios).map(audio => (this.audios[audio].loop = true));
     const texture = new THREE.TextureLoader().load(this.background);
@@ -120,7 +127,7 @@ class Scene {
 
     this.hive.rotation.x = THREE.Math.degToRad(25);
     this.addElement(this.hive);
-
+    this.updateMeshes();
     document.body.appendChild(this.renderer.domElement); // append a canvas to body
     this.animate();
     this.handlers();
@@ -180,8 +187,23 @@ class Scene {
       let texture = new THREE.TextureLoader().load(this.background);
       this.scene.background = texture;
     }
+
+    this.updateMeshes()
   }
 
+  /*
+  * -- update meshes
+  */
+  updateMeshes() {
+    this.meshes = [];
+    this.scene.traverse(node => {
+      // list of meshes
+      if (node instanceof THREE.Mesh) {
+        node.castShadow = true;
+        this.meshes.push(node);
+      }
+    });
+  }
   /*
   * -- stop current song
   */
@@ -226,6 +248,21 @@ class Scene {
     this.renderer.render(this.scene, this.camera);
   }
 
+
+  handleHover (e) {
+    this.mouse.x = e.clientX / this.renderer.domElement.clientWidth * 2 - 1
+    this.mouse.y = -(e.clientY / this.renderer.domElement.clientHeight) * 2 + 1
+    this.raycaster.setFromCamera(this.mouse, this.camera)
+    let intersects = this.raycaster.intersectObjects(this.meshes)
+
+    if (intersects.length > 0) {
+      document.body.style.cursor = "pointer"
+    } else {
+      document.body.style.cursor = "initial"
+    }
+  }
+
+
   handleResize() {
     // Keep aspect ratio of the scene
     this.camera.aspect = window.innerWidth / window.innerHeight;
@@ -234,6 +271,7 @@ class Scene {
   }
 
   handlers() {
+    window.addEventListener("mousemove", this.handleHover.bind(this));
     window.addEventListener("resize", this.handleResize.bind(this));
   }
 }
