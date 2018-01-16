@@ -233,38 +233,24 @@ class Bee {
     return this.bee;
   }
 
-  handleHover (e) {
-    this.mouse.x = e.clientX / this.renderer.domElement.clientWidth * 2 - 1
-    this.mouse.y = -(e.clientY / this.renderer.domElement.clientHeight) * 2 + 1
-    this.raycaster.setFromCamera(this.mouse, this.camera)
-    let intersects = this.raycaster.intersectObjects(this.meshes)
-
-    if (intersects.length > 0) {
-      document.body.style.cursor = "pointer"
-    } else {
-      document.body.style.cursor = "initial"
-    }
-  }
-
-
   handleClick(e) {
+    this.mouse.x = e.clientX / this.renderer.domElement.clientWidth * 2 - 1;
+    this.mouse.y = -(e.clientY / this.renderer.domElement.clientHeight) * 2 + 1;
     this.raycaster.setFromCamera(this.mouse, this.camera);
 
     let intersects = this.raycaster.intersectObjects(this.meshes);
 
     if (intersects.length > 0) {
-      console.log('cc');
       swal({
         title: this.author,
         text: this.message,
-        confirmButtonText: "✔ Ok"
+        confirmButtonText: "🔙 Back to the hive"
       });
       window.navigator.vibrate(700);
     }
   }
 
   handlers() {
-    window.addEventListener("mousemove", this.handleHover.bind(this));
     window.addEventListener("click", this.handleClick.bind(this));
   }
 }
