@@ -43,7 +43,6 @@ canvas {
   bottom: 0;
   width: 100%;
   display: flex;
-  flex-direction: column;
   flex-wrap: wrap;
   z-index: var(--uiZindex);
   align-items: center;
@@ -51,7 +50,6 @@ canvas {
 
 @media (min-width: 61.9375rem) { /* 991px */
   .ui {
-    flex-direction: row;
     padding: 0 0 1.875rem 0;
   }
 }
@@ -184,6 +182,22 @@ canvas {
 }
 
 /*
+ - Inject wrapper
+*/
+
+.inject-wrapper {
+  text-align: left;
+  padding-left: 15px;
+}
+
+@media (min-width: 61.9375rem) { /* 991px */
+  .inject-wrapper {
+    text-align: unset;
+    padding-left: unset;
+  }
+}
+
+/*
  - Links
 */
 
@@ -200,17 +214,21 @@ a {
   padding: 0.75em 2.25em;
   transition: all 0.5s ease-in-out;
   text-decoration: none;
-  margin-left: -6rem;
 }
 
-a:hover {
-  box-shadow: 0 0 0 0 rgba(0, 40, 120, 0);
-  background-position: 0 0;
-  padding: 1em 2.75em;
-  text-decoration: none;
-  font-weight: bolder;
-}
+@media (min-width: 61.9375rem) { /* 991px */
+  a {
+    margin-left: -6rem;
+  }
 
+  a:hover {
+    box-shadow: 0 0 0 0 rgba(0, 40, 120, 0);
+    background-position: 0 0;
+    padding: 1em 2.75em;
+    text-decoration: none;
+    font-weight: bolder;
+  }
+}
 /*
 * -- about
 */
@@ -225,6 +243,20 @@ a:hover {
 /*
 * -- counter
 */
+
+.counter-wrapper {
+  position: fixed;
+  top: 0;
+  right: 40px;
+}
+
+@media (min-width: 61.9375rem) { /* 991px */
+  .counter-wrapper {
+    position: unset;
+    top: unset;
+    right: unset;
+  }
+}
 
 #number {
   font-size: 2.1875rem;
@@ -402,10 +434,16 @@ a:hover {
 
 .mode-wrapper {
   position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
+  bottom: 90px;
+}
+
+@media (min-width: 61.9375rem) { /* 991px */
+  .mode-wrapper {
+    position: fixed;
+    bottom: unset;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
 
 .mode-wrapper label {
