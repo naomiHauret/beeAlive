@@ -11,7 +11,7 @@ import notificationSound from './assets/music/notification.mp3'
 import "whatwg-fetch";
 
 const loadingScreen = document.querySelector('[data-flag="loadingScreen"]');
-const ip = "192.168.0.16";
+const ip = "192.168.0.18";
 const url = `http://`+ ip +`:${SERVER_PORT}`
 const socket = io(url);
 const mongo = url +'/';

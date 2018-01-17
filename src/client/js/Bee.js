@@ -7,7 +7,7 @@ class Bee {
     this.renderer = renderer;
     this.camera = camera;
     this.scene = scene;
-    this.author = author ? author : 'Author';
+    this.author = author ? author : 'Creator';
     this.message = message ? message : 'Message';
     this.meshes = [];
     this.materials = {};
@@ -241,9 +241,12 @@ class Bee {
     let intersects = this.raycaster.intersectObjects(this.meshes);
 
     if (intersects.length > 0) {
+      if(this.message === 'Message') {
+        this.message = '<span>Go check this <a href="http://edition.cnn.com/2015/03/04/living/iyw-5-ways-to-help-bees/index.html" target="_blank" class="website">website</a> !</span>';
+      }
       swal({
         title: this.author,
-        text: this.message,
+        html: this.message,
         confirmButtonText: "🔙 Back to the hive"
       });
       window.navigator.vibrate(700);
