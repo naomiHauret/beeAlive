@@ -126,6 +126,11 @@ class Scene {
     }
 
     this.hive.rotation.x = THREE.Math.degToRad(25);
+    let box = new THREE.Box3()
+      .setFromObject(this.hive)
+      .getCenter(this.hive.position)
+      .multiplyScalar(-1);
+
     this.addElement(this.hive);
     this.updateMeshes();
     document.body.appendChild(this.renderer.domElement); // append a canvas to body
@@ -242,7 +247,7 @@ class Scene {
   */
   animate() {
     requestAnimationFrame(this.animate);
-    this.t += 0.005;
+    this.t += 0.0005;
     this.hive.position.x = 20 * Math.cos(this.t) + 0;
     this.hive.position.z = 10 * Math.sin(this.t) + 0;
     this.renderer.render(this.scene, this.camera);

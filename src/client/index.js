@@ -7,6 +7,7 @@ import toastr from "toastr";
 import { SERVER_PORT } from "./../shared/config";
 import Bee from "./js/Bee";
 import Scene from "./js/Scene";
+import notificationSound from './assets/music/notification.mp3'
 import "whatwg-fetch";
 
 const loadingScreen = document.querySelector('[data-flag="loadingScreen"]');
@@ -19,6 +20,7 @@ const add_bee = document.querySelector("#send-bee");
 const modeTogglers = document.querySelectorAll('[data-flag="modeToggler"]');
 const compteur = document.querySelector("#number");
 const aboutTrigger = document.querySelector('[data-flag="triggerExplanations"]')
+const notification = new Audio(notificationSound)
 
 range.classList.add("is-hidden");
 
@@ -31,7 +33,7 @@ domready(() => {
     setTimeout(() => {
       document.body.removeChild(loadingScreen);
     }, 900);
-  }, 3500);
+  }, 6500);
 
 
   let radios = document.querySelectorAll('.radio');
@@ -72,7 +74,7 @@ const getBees = (ourScene, compteur, add_bee, trigger) => {
           );
           getBees(ourScene, document.querySelector("#number"), false, false);
 
-          toastr.success('Hey look at this newborn !', 'New bee', { "progressBar": true, "preventDuplicates": true });
+          toastr.success('A new bee just joined the hive !', 'New bee', { "progressBar": true, "preventDuplicates": true });
         });
 
         if(add_bee) {
@@ -93,6 +95,7 @@ const getBees = (ourScene, compteur, add_bee, trigger) => {
                   .then(response => response.json())
                   .then(response => {
                     socket.emit("addBee", { _id: response._id });
+                    notification.play()
                   });
               } else if (result.value && author.value.length < 1 && message.value.length < 1) {
                 swal("Uh oh, missing info ¯\_(ツ)_/¯", "You have to write your pseudo and your message to send a bee !", "error");
