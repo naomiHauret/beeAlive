@@ -86,6 +86,9 @@ canvas {
  -- text-align
 */
 
+.text-center {
+  text-align: center !important;
+}
 @media all and (min-width: 769px) {
   .text-lg-center {
     text-align: center !important;

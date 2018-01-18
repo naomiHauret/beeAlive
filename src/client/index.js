@@ -75,6 +75,7 @@ const getBees = (ourScene, compteur, add_bee, trigger) => {
           getBees(ourScene, document.querySelector("#number"), false, false);
 
           toastr.success('A new bee just joined the hive !', 'New bee', { "progressBar": true, "preventDuplicates": true });
+          notification.play();
         });
 
         if(add_bee) {
@@ -95,7 +96,6 @@ const getBees = (ourScene, compteur, add_bee, trigger) => {
                   .then(response => response.json())
                   .then(response => {
                     socket.emit("addBee", { _id: response._id });
-                    notification.play()
                   });
               } else if (result.value && author.value.length < 1 && message.value.length < 1) {
                 swal("Uh oh, missing info ¯\_(ツ)_/¯", "You have to write your pseudo and your message to send a bee !", "error");
