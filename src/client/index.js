@@ -11,8 +11,7 @@ import notificationSound from './assets/music/notification.mp3'
 import "whatwg-fetch";
 
 const loadingScreen = document.querySelector('[data-flag="loadingScreen"]');
-const ip = "192.168.1.190";
-const url = `http://`+ ip +`:${SERVER_PORT}`
+const url = "https://whispering-brushlands-55777.herokuapp.com";
 const socket = io(url);
 const mongo = url +'/';
 const range = document.querySelector('[data-flag="beeRange"]');
